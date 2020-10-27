@@ -8,6 +8,7 @@ target 'Gdyniobus' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+
   target 'GdyniobusTests' do
     inherit! :complete
     # Pods for testing
