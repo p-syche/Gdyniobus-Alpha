@@ -3,6 +3,7 @@ import {StyleSheet, ScrollView, View, Text, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BusDetails from './bus-details';
+import {getRouteNameFromApiAsync} from '../../utils/fetch-bus-data';
 
 const BusItem = ({item, navigation}) => {
   // const busVectorIcon = <Icon name="bus" size={30} color="#900" />;
@@ -10,17 +11,34 @@ const BusItem = ({item, navigation}) => {
 
   // console.log('and the item is?', item);
 
+  const [routeName, setRouteName] = useState('');
+
+  useEffect(() => {
+    let mounted = true;
+    getRouteNameFromApiAsync(item.routeId).then((response) => {
+      if (mounted) {
+        setRouteName(response);
+      }
+    });
+
+    return function cleanup() {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <View style={styles.item}>
       <Pressable
         onPress={() => {
           navigation.navigate('BusDetails', {
-            item: item,
+            routeId: item.routeId,
+            routeName: routeName,
+            tripHeadsign: item.tripHeadsign,
           });
         }}>
-        <Text style={styles.title}>{item.routeShortName}</Text>
+        <Text style={styles.title}>{routeName}</Text>
         {item.agencyId === 6 ? busVectorIcon : null}
-        <Text style={styles.title}>{item.routeLongName}</Text>
+        <Text style={styles.title}>{item.tripHeadsign}</Text>
       </Pressable>
     </View>
   );

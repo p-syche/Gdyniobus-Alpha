@@ -5,16 +5,28 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {getTripsFromApiAsync} from '../../utils/fetch-bus-data';
 
 const BusDetails = ({route, navigation}) => {
-  const {item} = route.params;
+  const {routeId, routeName, tripHeadsign} = route.params;
 
   const [currentTrip, setCurrentTrip] = useState({});
 
-  useEffect(() => {
-    getTripsFromApiAsync(item).then((response) => setCurrentTrip(response));
-  });
+  // useEffect(() => {
+  //   let isMounted = true; // track whether component is mounted
+  //   getTripsFromApiAsync(routeId).then((response) => {
+  //     if (isMounted) {
+  //       setCurrentTrip(response);
+  //     }
+  //   });
+
+  //   return () => {
+  //     // clean up
+  //     isMounted = false;
+  //   };
+  // }, [routeId]);
 
   return (
     <View>
+      <Text>#{routeName}#</Text>
+      <Text>{tripHeadsign}</Text>
       <Text>There will be details here?</Text>
     </View>
   );

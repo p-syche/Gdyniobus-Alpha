@@ -11,7 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import BusItem from './bus-item';
 import StopItem from './stop-item';
 
-import {getRoutesFromApiAsync} from '../../utils/fetch-bus-data';
+import {getRouteAndTripData} from '../../utils/fetch-bus-data';
 import {getStopsFromApiAsync} from '../../utils/fetch-stop-data';
 
 const ListsOfItems = ({navigation}) => {
@@ -20,7 +20,7 @@ const ListsOfItems = ({navigation}) => {
   const [stops, setStops] = useState([]);
 
   useEffect(() => {
-    getRoutesFromApiAsync().then((response) => setRoutes(response));
+    getRouteAndTripData().then((response) => setRoutes(response));
   }, []);
 
   useEffect(() => {
