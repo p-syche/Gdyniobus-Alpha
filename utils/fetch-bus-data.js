@@ -35,3 +35,22 @@ export const getRoutesFromApiAsync = async () => {
     console.error(error);
   }
 };
+
+export const getTripsFromApiAsync = async ({routeId}) => {
+  try {
+    let response = await fetch(
+      'http://91.244.248.19/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/33618472-342c-4a4a-ba88-a911ec0ad5a7/download/trips.json',
+    );
+    console.log('hi, i entered the get trip stuff', routeId);
+    let json = await response.json();
+    const lastUpdateDate = Object.keys(json)[0];
+    const listOfAllTrips = json[lastUpdateDate].routes;
+    // const currentTrip = listOfAllTrips.map((key, value) => {
+    //   console.log(key, value);
+    // });
+
+    return listOfAllTrips;
+  } catch (error) {
+    console.error(error);
+  }
+};
