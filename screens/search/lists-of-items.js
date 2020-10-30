@@ -10,6 +10,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import BusItem from './bus-item';
 import StopItem from './stop-item';
+import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 
 import {getRouteAndTripData} from '../../utils/fetch-bus-data';
 import {getStopsFromApiAsync} from '../../utils/fetch-stop-data';
@@ -18,9 +19,12 @@ const ListsOfItems = ({navigation}) => {
   const [searchFor, setSearchFor] = useState('bus');
   const [routes, setRoutes] = useState([]);
   const [stops, setStops] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
-    getRouteAndTripData().then((response) => setRoutes(response));
+    getRouteAndTripData()
+      .then((response) => setRoutes(response))
+      .then(() => setIsDataLoaded(true));
   }, []);
 
   useEffect(() => {
@@ -34,31 +38,33 @@ const ListsOfItems = ({navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingTop: 50,
-        }}>
-        <Text>Choose either bus or bus stop</Text>
-        <View style={styles.buttons}>
-          <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
-          <Button title="Przystanki" onPress={() => setSearchFor('stop')} />
-        </View>
-        <View />
-        {searchFor === 'bus' ? (
-          <FlatList
-            data={routes}
-            renderItem={renderBusItems}
-            keyExtractor={(item) => item.uniqueId}
-          />
+      <View style={wrapperStyles.centered}>
+        {isDataLoaded ? (
+          <View style={[wrapperStyles.centered, {paddingTop: 50}]}>
+            <Text>Choose either bus or bus stop</Text>
+            <Text>Will add search here....</Text>
+
+            <View style={styles.buttons}>
+              <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
+              <Button title="Przystanki" onPress={() => setSearchFor('stop')} />
+            </View>
+            <View />
+            {searchFor === 'bus' ? (
+              <FlatList
+                data={routes}
+                renderItem={renderBusItems}
+                keyExtractor={(item) => item.uniqueId}
+              />
+            ) : (
+              <FlatList
+                data={stops}
+                renderItem={renderStopItems}
+                keyExtractor={(item) => item.stopShortName}
+              />
+            )}
+          </View>
         ) : (
-          <FlatList
-            data={stops}
-            renderItem={renderStopItems}
-            keyExtractor={(item) => item.stopShortName}
-          />
+          <Text>Loading...</Text>
         )}
       </View>
     </SafeAreaView>
@@ -66,15 +72,6 @@ const ListsOfItems = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
   buttons: {
     display: 'flex',
     flexDirection: 'row',

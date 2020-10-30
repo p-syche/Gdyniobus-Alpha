@@ -6,12 +6,12 @@ import BusDetails from './bus-details';
 import {getRouteNameFromApiAsync} from '../../utils/fetch-bus-data';
 
 const BusItem = ({item, navigation}) => {
+  const [routeName, setRouteName] = useState('');
+
   // const busVectorIcon = <Icon name="bus" size={30} color="#900" />;
   const busVectorIcon = <Text>BUS</Text>;
 
   // console.log('and the item is?', item);
-
-  const [routeName, setRouteName] = useState('');
 
   useEffect(() => {
     let mounted = true;

@@ -11,4 +11,9 @@ export const wrapperStyles = StyleSheet.create({
   body: {
     backgroundColor: '#ffffff',
   },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

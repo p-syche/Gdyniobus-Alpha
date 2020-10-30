@@ -45,24 +45,26 @@ const getAllTripsFromApiAsync = async () => {
   }
 };
 
-export const getTripsFromApiAsync = async ({routeId}) => {
+export const getStopsForTripFromApiAsync = async ({routeId}) => {
   try {
     let response = await fetch(
       // Przystanki w powiązaniu z trasą
       'http://91.244.248.19/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/0f2de200-e78b-4183-ae0d-071d7f07fc3f/download/stopsintrips.json',
     );
-    // console.log('hi, i entered the get trip stuff', routeId);
     let json = await response.json();
     const lastUpdateDate = Object.keys(json)[0];
-    const listOfAllTrips = json[lastUpdateDate].trips;
+    const listOfAllTrips = json[lastUpdateDate].stopsInTrip;
     const currentTrip = listOfAllTrips.map((tripItem) => {
+      console.log('here here', tripItem);
       if (tripItem.routeId === routeId) {
-        console.log(tripItem);
+        console.log('should be one trip?', tripItem);
         return tripItem;
       }
     });
 
-    return currentTrip;
+    console.log('hey, what?', currentTrip);
+
+    return 'lol';
   } catch (error) {
     console.error(error);
   }
