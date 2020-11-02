@@ -1,46 +1,48 @@
-import {Machine} from 'xstate';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Machine, assign} from 'xstate';
 
-const getRouteDataFromStorage = async () => {
+// sample SELECT event
+const selectEvent = {
+  type: 'SELECT', // event type
+  name: 'reactjs', // subreddit name
+};
+
+const invokeFetchSubreddit = async () => {
   try {
-    const jsonValue = await AsyncStorage.getItem('@gdyniobus_routes_data');
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (e) {
-    // error reading value
+    let response = await fetch(
+      'http://91.244.248.19/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/4128329f-5adb-4082-b326-6e1aea7caddf/download/routes.json',
+    );
+    let json = await response.json();
+    const lastUpdateDate = Object.keys(json)[0];
+    const listOfAllRoutes = json[lastUpdateDate].routes;
+    let listOfAllRoutesInGdynia = [
+      ...listOfAllRoutes.filter(isRouteInGdyniaPKT),
+      ...listOfAllRoutes.filter(isRouteInGdyniaPKA),
+    ];
+
+    return listOfAllRoutesInGdynia;
+  } catch (error) {
+    console.error(error);
   }
 };
 
-// sample SELECT event
-const loadBusRoutesEvent = {
-  type: 'LOAD_BUS_ROUTES', // event type
-  name: 'routes', // subreddit name
-};
+// function invokeFetchSubreddit(context) {
+//   const {subreddit} = context;
 
-function invokeFetchSubreddit(context) {
-  const {subreddit} = context;
+//   return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+//     .then((response) => response.json())
+//     .then((json) => json.data.children.map((child) => child.data));
+// }
 
-  return fetch(`https://www.reddit.com/r/${subreddit}.json`)
-    .then((response) => response.json())
-    .then((json) => json.data.children.map((child) => child.data));
-}
-
-const busRoutesMachine = Machine({
-  // Machine identifier
-  id: 'busRoutesMachine',
-
-  // Initial state
-  initial: 'pending',
-
-  // Local context for entire machine
+export const redditMachine = Machine({
+  id: 'reddit',
+  initial: 'idle',
   context: {
-    redditId: none,
-    busRoutes: [],
+    subreddit: null,
+    posts: null,
   },
-
-  // State definitions
   states: {
-    pending: {},
-    success: {
+    idle: {},
+    selected: {
       initial: 'loading',
       states: {
         loading: {
@@ -50,22 +52,22 @@ const busRoutesMachine = Machine({
             onDone: {
               target: 'loaded',
               actions: assign({
-                busRoutes: (context, event) => event.data
-              })
+                posts: (context, event) => event.data,
+              }),
             },
-            onError: 'failed'
-          }
+            onError: 'failed',
+          },
         },
         loaded: {},
-        failed: {}
+        failed: {},
+      },
     },
-    rejected: {},
   },
   on: {
-    LOAD_BUS_ROUTES: {
-      target: '.success',
+    SELECT: {
+      target: '.selected',
       actions: assign({
-        redditId: (context, event) => event.name,
+        subreddit: (context, event) => event.name,
       }),
     },
   },
