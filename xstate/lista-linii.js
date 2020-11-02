@@ -1,32 +1,44 @@
 import {Machine, assign} from 'xstate';
-import {getRoutesFromApiAsync} from '../utils/fetch-bus-data';
+import {getRoutesData} from '../utils/bus-data';
+// import {getRoutesFromApiAsync} from '../utils/fetch-bus-data';
 
-// sample SELECT event
-const selectEvent = {
-  type: 'SELECT', // event type
-  name: 'reactjs', // subreddit name
+const refreshBusRoutesEvent = {
+  type: 'REFRESH_BUS_ROUTES', // event type
 };
 
-export const redditMachine = Machine({
-  id: 'reddit',
-  initial: 'idle',
+export const busRoutesMachine = Machine({
+  id: 'busRoutes',
+  initial: 'loading',
   context: {
-    subreddit: null,
-    posts: null,
+    routes: [],
   },
   states: {
-    idle: {},
-    selected: {
+    loading: {
+      invoke: {
+        id: 'fetch-routes',
+        src: getRoutesData,
+        onDone: {
+          target: 'loaded',
+          actions: assign({
+            routes: (context, event) => event.data,
+          }),
+        },
+        onError: 'failed',
+      },
+    },
+    loaded: {},
+    failed: {},
+    refresh: {
       initial: 'loading',
       states: {
         loading: {
           invoke: {
-            id: 'fetch-subreddit',
-            src: getRoutesFromApiAsync,
+            id: 'fetch-routes',
+            src: getRoutesData,
             onDone: {
               target: 'loaded',
               actions: assign({
-                posts: (context, event) => event.data,
+                routes: (context, event) => event.data,
               }),
             },
             onError: 'failed',
@@ -38,11 +50,8 @@ export const redditMachine = Machine({
     },
   },
   on: {
-    SELECT: {
-      target: '.selected',
-      actions: assign({
-        subreddit: (context, event) => event.name,
-      }),
+    REFRESH_BUS_ROUTES: {
+      target: '.refresh',
     },
   },
 });

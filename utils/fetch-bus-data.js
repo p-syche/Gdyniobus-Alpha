@@ -13,13 +13,23 @@ const isRouteInGdyniaPKA = (value) => {
 //   return value.agencyId === 8;
 // };
 
-export const getRoutesFromApiAsync = async () => {
+const storeRoutesData = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem('@gdyniobus_routes', jsonValue);
+  } catch (e) {
+    // saving error
+  }
+};
+
+const getRoutesFromApiAsync = async () => {
   try {
     let response = await fetch(
       'http://91.244.248.19/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/4128329f-5adb-4082-b326-6e1aea7caddf/download/routes.json',
     );
     let json = await response.json();
-    const lastUpdateDate = Object.keys(json)[0];
+    const nodeCount = Object.keys(json).length - 1;
+    const lastUpdateDate = Object.keys(json)[nodeCount];
     const listOfAllRoutes = json[lastUpdateDate].routes;
     let listOfAllRoutesInGdynia = [
       ...listOfAllRoutes.filter(isRouteInGdyniaPKT),
@@ -39,7 +49,8 @@ const getAllTripsFromApiAsync = async () => {
       'http://91.244.248.19/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/33618472-342c-4a4a-ba88-a911ec0ad5a7/download/trips.json',
     );
     let json = await response.json();
-    const lastUpdateDate = Object.keys(json)[0];
+    const nodeCount = Object.keys(json).length - 1;
+    const lastUpdateDate = Object.keys(json)[nodeCount];
     const listOfAllTrips = json[lastUpdateDate].trips;
 
     return listOfAllTrips;
@@ -55,19 +66,20 @@ export const getStopsForTripFromApiAsync = async ({routeId}) => {
       'http://91.244.248.19/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/0f2de200-e78b-4183-ae0d-071d7f07fc3f/download/stopsintrips.json',
     );
     let json = await response.json();
-    const lastUpdateDate = Object.keys(json)[0];
-    const listOfAllTrips = json[lastUpdateDate].stopsInTrip;
-    const currentTrip = listOfAllTrips.map((tripItem) => {
-      console.log('here here', tripItem);
-      if (tripItem.routeId === routeId) {
-        console.log('should be one trip?', tripItem);
-        return tripItem;
-      }
-    });
+    const nodeCount = Object.keys(json).length - 1;
+    const lastUpdateDate = Object.keys(json)[nodeCount];
+    const listOfStopsForTrips = json[lastUpdateDate].stopsInTrip;
+    // const currentTrip = listOfAllTrips.map((tripItem) => {
+    //   console.log('here here', tripItem);
+    //   if (tripItem.routeId === routeId) {
+    //     console.log('should be one trip?', tripItem);
+    //     return tripItem;
+    //   }
+    // });
 
-    console.log('hey, what?', currentTrip);
+    // console.log('hey, what?', currentTrip);
 
-    return 'lol';
+    return listOfStopsForTrips;
   } catch (error) {
     console.error(error);
   }
@@ -96,6 +108,8 @@ export const getRouteAndTripData = async () => {
       return item;
     });
 
+    storeRoutesData(mergedWithUniqueIds);
+
     return mergedWithUniqueIds;
   } catch (error) {
     console.error(error);
@@ -108,7 +122,8 @@ export const getRouteNameFromApiAsync = async (routeId) => {
       'http://91.244.248.19/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/4128329f-5adb-4082-b326-6e1aea7caddf/download/routes.json',
     );
     let json = await response.json();
-    const lastUpdateDate = Object.keys(json)[0];
+    const nodeCount = Object.keys(json).length - 1;
+    const lastUpdateDate = Object.keys(json)[nodeCount];
     const listOfAllRoutes = json[lastUpdateDate].routes;
     const currentRouteName = listOfAllRoutes.map((routeItem) => {
       if (routeItem.routeId === routeId) {

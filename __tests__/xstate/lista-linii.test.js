@@ -1,17 +1,17 @@
 import {interpret} from 'xstate';
 import {assert} from 'chai';
 
-import {redditMachine} from '../../xstate/lista-linii';
+import {busRoutesMachine} from '../../xstate/lista-linii';
 
-describe('reddit machine (live)', () => {
-  it('should load posts of a selected subreddit', (done) => {
-    const redditService = interpret(redditMachine)
+describe('busRoutesMachine machine (live)', () => {
+  it('should load all routes for buses in Gdynia', (done) => {
+    const busRouteService = interpret(busRoutesMachine)
       .onTransition((state) => {
         // when the state finally reaches 'selected.loaded',
         // the test has succeeded.
 
-        if (state.matches({selected: 'loaded'})) {
-          assert.isNotEmpty(state.context.posts);
+        if (state.matches('loaded')) {
+          assert.isNotEmpty(state.context.routes);
 
           done();
         }
@@ -20,6 +20,6 @@ describe('reddit machine (live)', () => {
 
     // Test that when the 'SELECT' event is sent, the machine eventually
     // reaches the { selected: 'loaded' } state with posts
-    redditService.send('SELECT', {name: 'reactjs'});
+    // redditService.send('REFRESH_BUS_ROUTES');
   });
 });
