@@ -1,3 +1,6 @@
+import fetch from 'cross-fetch';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const isRouteInGdyniaPKT = (value) => {
   return value.agencyId === 5;
 };
@@ -10,7 +13,7 @@ const isRouteInGdyniaPKA = (value) => {
 //   return value.agencyId === 8;
 // };
 
-const getRoutesFromApiAsync = async () => {
+export const getRoutesFromApiAsync = async () => {
   try {
     let response = await fetch(
       'http://91.244.248.19/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/4128329f-5adb-4082-b326-6e1aea7caddf/download/routes.json',
