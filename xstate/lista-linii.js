@@ -1,6 +1,9 @@
 import {Machine, assign} from 'xstate';
-import {getRoutesData} from '../utils/bus-data';
-// import {getRoutesFromApiAsync} from '../utils/fetch-bus-data';
+import {
+  getRoutesData,
+  getStopsData,
+  getStopsForTripsData,
+} from '../utils/async-stored-data';
 
 const refreshBusRoutesEvent = {
   type: 'REFRESH_BUS_ROUTES', // event type
@@ -8,26 +11,88 @@ const refreshBusRoutesEvent = {
 
 export const busRoutesMachine = Machine({
   id: 'busRoutes',
-  initial: 'loading',
+  initial: 'loadingData',
   context: {
     routes: [],
+    stops: [],
+    stopsForTrips: [],
   },
   states: {
-    loading: {
-      invoke: {
-        id: 'fetch-routes',
-        src: getRoutesData,
-        onDone: {
-          target: 'loaded',
-          actions: assign({
-            routes: (context, event) => event.data,
-          }),
+    loadingData: {
+      type: 'parallel',
+      states: {
+        busRoutes: {
+          initial: 'loadingRoutes',
+          states: {
+            loadingRoutes: {
+              invoke: {
+                id: 'fetch-routes',
+                src: getRoutesData,
+                onDone: {
+                  target: 'success',
+                  actions: assign({
+                    routes: (context, event) => event.data,
+                  }),
+                },
+                onError: 'failure',
+              },
+            },
+            success: {
+              type: 'final',
+            },
+            failure: {},
+          },
         },
-        onError: 'failed',
+        busStops: {
+          initial: 'loadingStops',
+          states: {
+            loadingStops: {
+              invoke: {
+                id: 'fetch-stops',
+                src: getStopsData,
+                onDone: {
+                  target: 'success',
+                  actions: assign({
+                    stops: (context, event) => event.data,
+                  }),
+                },
+                onError: 'failure',
+              },
+            },
+            success: {
+              type: 'final',
+            },
+            failure: {},
+          },
+        },
+        stopsForTrips: {
+          initial: 'loadingStopsForTrips',
+          states: {
+            loadingStopsForTrips: {
+              invoke: {
+                id: 'fetch-stops-for-trips',
+                src: getStopsForTripsData,
+                onDone: {
+                  target: 'success',
+                  actions: assign({
+                    stopsForTrips: (context, event) => event.data,
+                  }),
+                },
+                onError: 'failure',
+              },
+            },
+            success: {
+              type: 'final',
+            },
+            failure: {},
+          },
+        },
       },
+      onDone: 'dataLoaded',
+      onError: 'dataFailure',
     },
-    loaded: {},
-    failed: {},
+    dataLoaded: {},
+    dataFailure: {},
     refresh: {
       initial: 'loading',
       states: {
