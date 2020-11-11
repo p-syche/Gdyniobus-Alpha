@@ -59,18 +59,18 @@ export const getStopsForTripFromApiAsync = async () => {
     let json = await response.json();
     const updateDate = findUpdateDate(json);
     const listOfStopsForTrips = json[updateDate].stopsInTrip;
-    // const currentTrip = listOfAllTrips.map((tripItem) => {
-    //   console.log('here here', tripItem);
-    //   if (tripItem.routeId === routeId) {
-    //     console.log('should be one trip?', tripItem);
-    //     return tripItem;
-    //   }
-    // });
 
-    // console.log('hey, what?', currentTrip);
-    storeDataInAsyncStorage('@gdyniobus_stops_for_trips', listOfStopsForTrips);
+    let listOfStopsForTripsInGdynia = [
+      ...listOfStopsForTrips.filter(isRouteInGdyniaPKT),
+      ...listOfStopsForTrips.filter(isRouteInGdyniaPKA),
+    ];
 
-    return listOfStopsForTrips;
+    storeDataInAsyncStorage(
+      '@gdyniobus_stops_for_trips',
+      listOfStopsForTripsInGdynia,
+    );
+
+    return listOfStopsForTripsInGdynia;
   } catch (error) {
     console.error(error);
   }

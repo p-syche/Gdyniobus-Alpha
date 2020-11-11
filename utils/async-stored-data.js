@@ -31,7 +31,16 @@ export const getStopsForTripsData = async () => {
     return jsonValue !== null
       ? JSON.parse(jsonValue)
       : getStopsForTripFromApiAsync();
-    // return getStopsFromApiAsync();
+    // return getStopsForTripFromApiAsync();
+  } catch (e) {
+    // error reading value
+  }
+};
+
+export const simpleGetStopsForTripsData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@gdyniobus_stops_for_trips');
+    return jsonValue !== null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     // error reading value
   }
