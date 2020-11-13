@@ -19,7 +19,9 @@ const ListsOfItems = ({navigation}) => {
   const renderBusItems = ({item}) => (
     <BusItem item={item} navigation={navigation} />
   );
-  const renderStopItems = ({item}) => <StopItem item={item} />;
+  const renderStopItems = ({item}) => (
+    <StopItem item={item} navigation={navigation} />
+  );
 
   return (
     <SafeAreaView style={{flex: 1}}>

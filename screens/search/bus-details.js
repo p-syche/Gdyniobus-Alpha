@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, View, Text, FlatList} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 import BusDetailsStopItem from './bus-details-stop-item';
@@ -9,9 +8,8 @@ import {State, interpret} from 'xstate';
 import {busRoutesMachine} from '../../xstate/lista-linii';
 import {simpleGetStopsForTripsData} from '../../utils/async-stored-data';
 
-const BusDetails = ({route, navigation}) => {
+const BusDetails = ({route}) => {
   const {routeId, routeName, tripHeadsign, tripId} = route.params;
-  const [storedTrips, setStoredTrips] = useState([]);
   const [currentTrip, setCurrentTrip] = useState([]);
 
   const isCurrentRoute = (value) => {

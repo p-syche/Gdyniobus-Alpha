@@ -11,8 +11,6 @@ const BusItem = ({item, navigation}) => {
   // const busVectorIcon = <Icon name="bus" size={30} color="#900" />;
   const busVectorIcon = <Text>BUS</Text>;
 
-  // console.log('and the item is?', item);
-
   useEffect(() => {
     let mounted = true;
     getRouteNameFromApiAsync(item.routeId).then((response) => {

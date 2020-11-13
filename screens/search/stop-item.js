@@ -1,21 +1,28 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, ScrollView, View, Text} from 'react-native';
+import {StyleSheet, ScrollView, View, Text, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import StopDetails from './stop-details';
 
-const StopItem = ({item}) => {
+const StopItem = ({item, navigation}) => {
   // console.log('and the item is?', item);
 
   return (
     <View style={styles.item}>
-      <Text style={styles.title}>{item.stopDesc}</Text>
+      <Pressable
+        onPress={() => {
+          navigation.navigate('StopDetails', {
+            stopId: item.stopId,
+          });
+        }}>
+        <Text style={styles.title}>{item.stopDesc}</Text>
+      </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#2DDFFF',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
