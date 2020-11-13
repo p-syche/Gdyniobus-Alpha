@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Pressable} from 'react-native';
 import {simpleGetStops} from '../../utils/async-stored-data';
 
 const BusStopDescription = ({stopId}) => {
@@ -18,7 +18,6 @@ const BusStopDescription = ({stopId}) => {
 
   return (
     <View>
-      <Text style={styles.title}>I want to see the description here.</Text>
       <Text style={styles.title}>
         HERE: {currentStop && currentStop.stopDesc}
       </Text>
@@ -26,12 +25,21 @@ const BusStopDescription = ({stopId}) => {
   );
 };
 
-const BusDetailsStopItem = ({item}) => {
+const BusDetailsStopItem = ({item, navigation}) => {
+  console.log('checking navigation prop in bus details', navigation);
+
   return (
     <View style={styles.item}>
-      <Text style={styles.title}>This will be a stop {item.stopId}</Text>
-      <Text style={styles.title}>and the trip id is? {item.tripId}</Text>
-      <BusStopDescription stopId={item.stopId} />
+      <Pressable
+        onPress={() => {
+          navigation.navigate('StopDetails', {
+            stopId: item.stopId,
+          });
+        }}>
+        <Text style={styles.title}>This will be a stop {item.stopId}</Text>
+        <Text style={styles.title}>and the trip id is? {item.tripId}</Text>
+        <BusStopDescription stopId={item.stopId} />
+      </Pressable>
     </View>
   );
 };

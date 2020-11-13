@@ -8,7 +8,7 @@ import {State, interpret} from 'xstate';
 import {busRoutesMachine} from '../../xstate/lista-linii';
 import {simpleGetStopsForTripsData} from '../../utils/async-stored-data';
 
-const BusDetails = ({route}) => {
+const BusDetails = ({route, navigation}) => {
   const {routeId, routeName, tripHeadsign, tripId} = route.params;
   const [currentTrip, setCurrentTrip] = useState([]);
 
@@ -30,7 +30,9 @@ const BusDetails = ({route}) => {
       <Text>There will be details here?</Text>
       <FlatList
         data={currentTrip}
-        renderItem={BusDetailsStopItem}
+        renderItem={({item}) => (
+          <BusDetailsStopItem item={item} navigation={navigation} />
+        )}
         keyExtractor={(item) => item.uniqueId}
       />
     </View>
