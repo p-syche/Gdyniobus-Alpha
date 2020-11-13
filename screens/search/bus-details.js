@@ -3,6 +3,7 @@ import {StyleSheet, ScrollView, View, Text, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
+import BusDetailsStopItem from './bus-details-stop-item';
 
 import {State, interpret} from 'xstate';
 import {busRoutesMachine} from '../../xstate/lista-linii';
@@ -24,15 +25,6 @@ const BusDetails = ({route, navigation}) => {
     });
   }, []);
 
-  const renderStopItems = ({item}) => (
-    <View>
-      <Text>This will be a stop {item.stopId}</Text>
-      <Text>and the trip id is? {item.tripId}</Text>
-    </View>
-  );
-
-  // const currentTrip = storedTrips.filter(isCurrentRoute);
-
   return (
     <View style={[wrapperStyles.centered, {padding: 20}]}>
       <Text>#{routeName}#</Text>
@@ -40,7 +32,7 @@ const BusDetails = ({route, navigation}) => {
       <Text>There will be details here?</Text>
       <FlatList
         data={currentTrip}
-        renderItem={renderStopItems}
+        renderItem={BusDetailsStopItem}
         keyExtractor={(item) => item.uniqueId}
       />
     </View>
