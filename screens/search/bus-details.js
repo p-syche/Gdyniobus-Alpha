@@ -9,30 +9,29 @@ import {busRoutesMachine} from '../../xstate/lista-linii';
 import {simpleGetStopsForTripsData} from '../../utils/async-stored-data';
 
 const BusDetails = ({route, navigation}) => {
-  const {routeId, routeName, tripHeadsign} = route.params;
+  const {routeId, routeName, tripHeadsign, tripId} = route.params;
   const [storedTrips, setStoredTrips] = useState([]);
   const [currentTrip, setCurrentTrip] = useState([]);
 
   const isCurrentRoute = (value) => {
-    return value.routeId === routeId;
+    return value.routeId === routeId && value.tripId === tripId;
   };
 
   useEffect(() => {
-    simpleGetStopsForTripsData()
-      .then((result) => {
-        return result.filter(isCurrentRoute);
-      })
-      .then((filteredRoutes) => {
-        // console.log('at least tell me this result?', filteredRoutes);
-        setCurrentTrip(filteredRoutes);
-        console.log('wow man, currentTrip', currentTrip);
-      });
-  }, [routeId]);
+    simpleGetStopsForTripsData().then((result) => {
+      const filteredResults = result.filter(isCurrentRoute);
+      setCurrentTrip(filteredResults);
+    });
+  }, []);
 
-  const renderStopItems = ({item}) => <Text>This will be a stop</Text>;
+  const renderStopItems = ({item}) => (
+    <View>
+      <Text>This will be a stop {item.stopId}</Text>
+      <Text>and the trip id is? {item.tripId}</Text>
+    </View>
+  );
 
   // const currentTrip = storedTrips.filter(isCurrentRoute);
-  console.log("now we'll see what we shall see", currentTrip);
 
   return (
     <View style={[wrapperStyles.centered, {padding: 20}]}>
@@ -42,7 +41,7 @@ const BusDetails = ({route, navigation}) => {
       <FlatList
         data={currentTrip}
         renderItem={renderStopItems}
-        keyExtractor={(item) => item.stopId + '_' + item.agencyId}
+        keyExtractor={(item) => item.uniqueId}
       />
     </View>
   );

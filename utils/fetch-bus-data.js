@@ -2,6 +2,25 @@ import fetch from 'cross-fetch';
 import {findUpdateDate} from './find-update-date';
 import {storeDataInAsyncStorage} from './store-data';
 
+// const isRouteInGdynia = (value, index, something) => {
+//   // console.log('something?', something);
+//   return value.agencyId === something.agencyId;
+// };
+
+const checkIsRouteInGdynia = (listOfRoutes) => {
+  const routesInGdynia = [
+    ...listOfRoutes.filter(isRouteInGdyniaPKT),
+    ...listOfRoutes.filter(isRouteInGdyniaPKA),
+    ...listOfRoutes.filter(isRouteInGdyniaGryf),
+    ...listOfRoutes.filter(isRouteInGdyniaPKM),
+    ...listOfRoutes.filter(isRouteInGdyniaWarbus),
+    ...listOfRoutes.filter(isRouteInGdyniaIrex),
+    ...listOfRoutes.filter(isRouteInGdyniaBP),
+  ];
+
+  return routesInGdynia;
+};
+
 const isRouteInGdyniaPKT = (value) => {
   return value.agencyId === 5;
 };
@@ -10,9 +29,25 @@ const isRouteInGdyniaPKA = (value) => {
   return value.agencyId === 6;
 };
 
-// const isRouteInGdyniaPKM = (value) => {
-//   return value.agencyId === 8;
-// };
+const isRouteInGdyniaGryf = (value) => {
+  return value.agencyId === 7;
+};
+
+const isRouteInGdyniaPKM = (value) => {
+  return value.agencyId === 8;
+};
+
+const isRouteInGdyniaWarbus = (value) => {
+  return value.agencyId === 11;
+};
+
+const isRouteInGdyniaIrex = (value) => {
+  return value.agencyId === 17;
+};
+
+const isRouteInGdyniaBP = (value) => {
+  return value.agencyId === 18;
+};
 
 const getRoutesFromApiAsync = async () => {
   try {
@@ -23,10 +58,7 @@ const getRoutesFromApiAsync = async () => {
     const updateDate = findUpdateDate(json);
 
     const listOfAllRoutes = json[updateDate].routes;
-    let listOfAllRoutesInGdynia = [
-      ...listOfAllRoutes.filter(isRouteInGdyniaPKT),
-      ...listOfAllRoutes.filter(isRouteInGdyniaPKA),
-    ];
+    const listOfAllRoutesInGdynia = checkIsRouteInGdynia(listOfAllRoutes);
 
     return listOfAllRoutesInGdynia;
   } catch (error) {
@@ -60,17 +92,26 @@ export const getStopsForTripFromApiAsync = async () => {
     const updateDate = findUpdateDate(json);
     const listOfStopsForTrips = json[updateDate].stopsInTrip;
 
-    let listOfStopsForTripsInGdynia = [
-      ...listOfStopsForTrips.filter(isRouteInGdyniaPKT),
-      ...listOfStopsForTrips.filter(isRouteInGdyniaPKA),
-    ];
+    const listOfStopsForTripsInGdynia = checkIsRouteInGdynia(
+      listOfStopsForTrips,
+    );
+    // console.log('tell me the list here pls', listOfStopsForTripsInGdynia);
+
+    const listOfStopsForTripsWithUniqueIds = listOfStopsForTripsInGdynia.map(
+      function (item, value) {
+        item.uniqueId = String(
+          item.agencyId + '_' + item.routeId + '_' + item.tripId + value,
+        );
+        return item;
+      },
+    );
 
     storeDataInAsyncStorage(
       '@gdyniobus_stops_for_trips',
-      listOfStopsForTripsInGdynia,
+      listOfStopsForTripsWithUniqueIds,
     );
 
-    return listOfStopsForTripsInGdynia;
+    return listOfStopsForTripsWithUniqueIds;
   } catch (error) {
     console.error(error);
   }

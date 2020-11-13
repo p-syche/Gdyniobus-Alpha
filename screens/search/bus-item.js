@@ -34,6 +34,7 @@ const BusItem = ({item, navigation}) => {
             routeId: item.routeId,
             routeName: routeName,
             tripHeadsign: item.tripHeadsign,
+            tripId: item.tripId,
           });
         }}>
         <Text style={styles.title}>{routeName}</Text>
