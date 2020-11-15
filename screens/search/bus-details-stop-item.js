@@ -35,7 +35,6 @@ const BusDetailsStopItem = ({item, navigation}) => {
           });
         }}>
         <Text style={styles.title}>This will be a stop {item.stopId}</Text>
-        <Text style={styles.title}>and the trip id is? {item.tripId}</Text>
         <BusStopDescription stopId={item.stopId} />
       </Pressable>
     </View>

@@ -10,6 +10,13 @@ import {simpleGetStopsForTripsData} from '../../utils/async-stored-data';
 
 const BusDetails = ({route, navigation}) => {
   const {routeId, routeName, tripHeadsign, tripId} = route.params;
+  // console.log(
+  //   'I will be checking route params here in the BUS DETAILS SCREEN',
+  //   routeId,
+  //   routeName,
+  //   tripHeadsign,
+  //   tripId,
+  // );
   const [currentTrip, setCurrentTrip] = useState([]);
 
   const isCurrentRoute = (value) => {
@@ -19,7 +26,10 @@ const BusDetails = ({route, navigation}) => {
   useEffect(() => {
     simpleGetStopsForTripsData().then((result) => {
       const filteredResults = result.filter(isCurrentRoute);
-      setCurrentTrip(filteredResults);
+      const sortedResults = filteredResults.sort(
+        (a, b) => a.stopSequence - b.stopSequence,
+      );
+      setCurrentTrip(sortedResults);
     });
   }, []);
 

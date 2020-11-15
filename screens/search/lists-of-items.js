@@ -20,7 +20,7 @@ const ListsOfItems = ({navigation}) => {
     <BusItem item={item} navigation={navigation} />
   );
   const renderStopItems = ({item}) => (
-    <StopItem item={item} navigation={navigation} />
+    <StopItem item={item} navigation={navigation} busRoutes={routes} />
   );
 
   return (

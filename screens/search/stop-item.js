@@ -3,15 +3,15 @@ import {StyleSheet, ScrollView, View, Text, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import StopDetails from './stop-details';
 
-const StopItem = ({item, navigation}) => {
-  // console.log('and the item is?', item);
-
+const StopItem = ({item, navigation, busRoutes}) => {
   return (
     <View style={styles.item}>
       <Pressable
         onPress={() => {
           navigation.navigate('StopDetails', {
+            stopItem: item,
             stopId: item.stopId,
+            busRoutes: busRoutes,
           });
         }}>
         <Text style={styles.title}>{item.stopDesc}</Text>
