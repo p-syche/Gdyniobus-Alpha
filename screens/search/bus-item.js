@@ -1,19 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, View, Text, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import BusDetails from './bus-details';
 import {getRouteNameFromApiAsync} from '../../utils/fetch-bus-data';
 
 const BusItem = ({item, navigation}) => {
   const [routeName, setRouteName] = useState('');
 
-  // const busVectorIcon = <Icon name="bus" size={30} color="#900" />;
-  const busVectorIcon = <Text>BUS</Text>;
+  console.log('show me the shape of the item, pls', item, navigation);
 
   useEffect(() => {
     let mounted = true;
     getRouteNameFromApiAsync(item.routeId).then((response) => {
+      console.log('the routeID is?', item.routeId);
       if (mounted) {
         setRouteName(response);
       }
@@ -36,7 +35,6 @@ const BusItem = ({item, navigation}) => {
           });
         }}>
         <Text style={styles.title}>{routeName}</Text>
-        {item.agencyId === 6 ? busVectorIcon : null}
         <Text style={styles.title}>{item.tripHeadsign}</Text>
       </Pressable>
     </View>

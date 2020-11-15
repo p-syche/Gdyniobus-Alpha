@@ -2,17 +2,19 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, View, Text, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
-import BusDetailsStopItem from './bus-details-stop-item';
+import BusItem from './bus-item';
 
 import {State, interpret} from 'xstate';
 import {busRoutesMachine} from '../../xstate/lista-linii';
 import {simpleGetStops} from '../../utils/async-stored-data';
 import {getEstimatedArrivalsFromApiAsync} from '../../utils/fetch-stop-data';
 
-const StopDetails = ({route}) => {
+const StopDetails = ({route, navigation}) => {
   const {stopId} = route.params;
   const [currentStop, setCurrentStop] = useState([]);
   const [estimatedArrivals, setEstimatedArrivals] = useState([]);
+
+  // console.log('do i have the navigation prop here?', navigation);
 
   const isCurrentStop = (value) => {
     return value.stopId === stopId;
@@ -50,19 +52,18 @@ const StopDetails = ({route}) => {
     };
   }, []);
 
-  // console.log('what do I know?', currentStop.stopDesc);
-
   const renderStopItems = ({item}) => (
-    <View>
+    <View style={styles.item}>
       <Text>{item.delayDesc}</Text>
       <Text>{item.shortName}</Text>
       <Text>{item.headSign}</Text>
+      <BusItem item={item} navigation={navigation} />
     </View>
   );
 
   return (
     <View style={[wrapperStyles.centered, {padding: 20}]}>
-      <Text>{currentStop && currentStop.stopDesc}</Text>
+      <Text style={styles.title}>{currentStop && currentStop.stopDesc}</Text>
       <FlatList
         data={estimatedArrivals}
         renderItem={renderStopItems}
@@ -74,7 +75,7 @@ const StopDetails = ({route}) => {
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#E33CC7',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
