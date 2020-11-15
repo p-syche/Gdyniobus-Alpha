@@ -26,8 +26,6 @@ const BusStopDescription = ({stopId}) => {
 };
 
 const BusDetailsStopItem = ({item, navigation}) => {
-  console.log('checking navigation prop in bus details', navigation);
-
   return (
     <View style={styles.item}>
       <Pressable

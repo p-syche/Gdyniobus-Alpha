@@ -23,3 +23,22 @@ export const getStopsFromApiAsync = async () => {
     console.error(error);
   }
 };
+
+export const getEstimatedArrivalsFromApiAsync = async (stopId) => {
+  try {
+    let response = await fetch(
+      'https://zkmgdynia.pl/stopsAPI/getDisplay/' + stopId,
+    );
+    let json = await response.json();
+    // console.log('hey ho hey ho hey ho!', json, stopId);
+    // const updateDate = findUpdateDate(json);
+
+    // const listOfAllStops = json[updateDate].stops;
+    // let listOfAllStopsInGdynia = listOfAllStops.filter(isStopInGdynia);
+
+    // storeDataInAsyncStorage('@gdyniobus_estimated_arrivals', listOfAllStopsInGdynia);
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+};
