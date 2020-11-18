@@ -1,9 +1,6 @@
 import React from 'react';
-import {StyleSheet, ScrollView, View, Text, Pressable} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import BusDetails from './bus-details';
-import {getRouteNameFromApiAsync} from '../../utils/fetch-bus-data';
-import {getRoutesData} from '../../utils/async-stored-data';
+import {StyleSheet, View, Text, Pressable} from 'react-native';
+import BusTripsPerRoute from './bus-trips-per-route';
 
 const BusItem = ({item, navigation}) => {
   // console.log('hey ho wtf', item);
@@ -11,15 +8,13 @@ const BusItem = ({item, navigation}) => {
     <View style={styles.item}>
       <Pressable
         onPress={() => {
-          navigation.navigate('BusDetails', {
+          navigation.navigate('BusTripsPerRoute', {
             routeId: item.routeId,
-            routeName: item.routeShortName,
-            tripHeadsign: item.tripHeadsign,
-            tripId: item.tripId,
+            routeNumber: item.routeShortName,
           });
         }}>
+        <Text style={styles.title}>{item.routeId}</Text>
         <Text style={styles.title}>{item.routeShortName}</Text>
-        <Text style={styles.title}>{item.tripHeadsign}</Text>
       </Pressable>
     </View>
   );

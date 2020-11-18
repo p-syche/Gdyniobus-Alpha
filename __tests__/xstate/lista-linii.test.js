@@ -13,6 +13,7 @@ describe('busRoutesMachine machine (live)', () => {
 
         if (state.matches('dataLoaded')) {
           assert.isNotEmpty(state.context.routes);
+          assert.isNotEmpty(state.context.trips);
           assert.isNotEmpty(state.context.stops);
           assert.isNotEmpty(state.context.stopsForTrips);
 

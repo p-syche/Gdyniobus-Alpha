@@ -117,23 +117,23 @@ export const getStopsForTripFromApiAsync = async () => {
   }
 };
 
-export const getRouteAndTripData = async () => {
+export const getRouteData = async () => {
   try {
     let listOfRoutes = await getRoutesFromApiAsync();
-    let listOfTrips = await getAllTripsFromApiAsync();
+    // let listOfTrips = await getAllTripsFromApiAsync();
 
-    let merged = [];
+    // let merged = [];
 
-    for (let i = 0; i < listOfTrips.length; i++) {
-      merged.push({
-        ...listOfTrips[i],
-        ...listOfRoutes.find(
-          (itmInner) => itmInner.routeId === listOfTrips[i].routeId,
-        ),
-      });
-    }
+    // for (let i = 0; i < listOfTrips.length; i++) {
+    //   merged.push({
+    //     ...listOfTrips[i],
+    //     ...listOfRoutes.find(
+    //       (itmInner) => itmInner.routeId === listOfTrips[i].routeId,
+    //     ),
+    //   });
+    // }
 
-    const mergedWithUniqueIds = merged.map(function (item, value) {
+    const mergedWithUniqueIds = listOfRoutes.map(function (item, value) {
       item.uniqueId = String(
         item.agencyId + '_' + item.routeId + '_' + item.tripId + value,
       );
@@ -143,6 +143,18 @@ export const getRouteAndTripData = async () => {
     storeDataInAsyncStorage('@gdyniobus_routes', mergedWithUniqueIds);
 
     return mergedWithUniqueIds;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getTripData = async () => {
+  try {
+    let listOfTrips = await getAllTripsFromApiAsync();
+
+    storeDataInAsyncStorage('@gdyniobus_trips', listOfTrips);
+
+    return listOfTrips;
   } catch (error) {
     console.error(error);
   }

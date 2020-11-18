@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  getRouteAndTripData,
+  getRouteData,
+  getTripData,
   getStopsForTripFromApiAsync,
 } from './fetch-bus-data';
 import {getStopsFromApiAsync} from './fetch-stop-data';
@@ -8,8 +9,18 @@ import {getStopsFromApiAsync} from './fetch-stop-data';
 export const getRoutesData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('@gdyniobus_routes');
-    return jsonValue !== null ? JSON.parse(jsonValue) : getRouteAndTripData();
-    // return getRouteAndTripData();
+    // return jsonValue !== null ? JSON.parse(jsonValue) : getRouteData();
+    return getRouteData();
+  } catch (e) {
+    // error reading value
+  }
+};
+
+export const getTripsData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@gdyniobus_trips');
+    // return jsonValue !== null ? JSON.parse(jsonValue) : getTripData();
+    return getTripData();
   } catch (e) {
     // error reading value
   }

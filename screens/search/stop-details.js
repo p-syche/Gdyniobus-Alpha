@@ -4,16 +4,25 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 import StopDetailsBusItem from './stop-details-bus-item';
 
-import {State, interpret} from 'xstate';
-import {busRoutesMachine} from '../../xstate/lista-linii';
-import {simpleGetStops} from '../../utils/async-stored-data';
 import {getEstimatedArrivalsFromApiAsync} from '../../utils/fetch-stop-data';
 
-const StopDetails = ({route, navigation}) => {
-  const {stopItem, stopId, busRoutes} = route.params;
-  const [estimatedArrivals, setEstimatedArrivals] = useState([]);
+import {useMachine} from '@xstate/react';
+import {busRoutesMachine} from '../../xstate/lista-linii';
 
-  // console.log('what is the stopItem?', stopItem);
+const StopDetails = ({route, navigation}) => {
+  const {stopId} = route.params;
+  const [estimatedArrivals, setEstimatedArrivals] = useState([]);
+  const [currentStop, setCurrentStop] = useState([]);
+
+  const [state] = useMachine(busRoutesMachine);
+  const {stops, routes} = state.context;
+
+  useEffect(() => {
+    if (state.matches('dataLoaded')) {
+      const filteredStops = stops.find((element) => element.stopId === stopId);
+      setCurrentStop(filteredStops);
+    }
+  }, [state]);
 
   useEffect(() => {
     let mounted = true;
@@ -40,15 +49,11 @@ const StopDetails = ({route, navigation}) => {
 
   return (
     <View style={[wrapperStyles.centered, {padding: 20}]}>
-      <Text style={styles.title}>{stopItem.stopDesc}</Text>
+      <Text style={styles.title}>{currentStop.stopDesc}</Text>
       <FlatList
         data={estimatedArrivals}
         renderItem={({item}) => (
-          <StopDetailsBusItem
-            item={item}
-            navigation={navigation}
-            busRoutes={busRoutes}
-          />
+          <StopDetailsBusItem item={item} navigation={navigation} />
         )}
         keyExtractor={(item, key) =>
           item.routeId + '_' + item.tripId + '_' + key

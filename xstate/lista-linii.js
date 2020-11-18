@@ -1,6 +1,7 @@
 import {Machine, assign} from 'xstate';
 import {
   getRoutesData,
+  getTripsData,
   getStopsData,
   getStopsForTripsData,
 } from '../utils/async-stored-data';
@@ -14,6 +15,7 @@ export const busRoutesMachine = Machine({
   initial: 'loadingData',
   context: {
     routes: [],
+    trips: [],
     stops: [],
     stopsForTrips: [],
   },
@@ -32,6 +34,28 @@ export const busRoutesMachine = Machine({
                   target: 'success',
                   actions: assign({
                     routes: (context, event) => event.data,
+                  }),
+                },
+                onError: 'failure',
+              },
+            },
+            success: {
+              type: 'final',
+            },
+            failure: {},
+          },
+        },
+        busTrips: {
+          initial: 'loadingTrips',
+          states: {
+            loadingTrips: {
+              invoke: {
+                id: 'fetch-trips',
+                src: getTripsData,
+                onDone: {
+                  target: 'success',
+                  actions: assign({
+                    trips: (context, event) => event.data,
                   }),
                 },
                 onError: 'failure',
@@ -88,35 +112,43 @@ export const busRoutesMachine = Machine({
           },
         },
       },
-      onDone: 'dataLoaded',
-      onError: 'dataFailure',
-    },
-    dataLoaded: {},
-    dataFailure: {},
-    refresh: {
-      initial: 'loading',
-      states: {
-        loading: {
-          invoke: {
-            id: 'fetch-routes',
-            src: getRoutesData,
-            onDone: {
-              target: 'loaded',
-              actions: assign({
-                routes: (context, event) => event.data,
-              }),
-            },
-            onError: 'failed',
-          },
-        },
-        loaded: {},
-        failed: {},
+      onDone: {
+        target: 'dataLoaded',
+      },
+      onError: {
+        target: 'dataFailure',
       },
     },
-  },
-  on: {
-    REFRESH_BUS_ROUTES: {
-      target: '.refresh',
+    dataLoaded: {
+      type: 'final',
     },
+    dataFailure: {
+      type: 'final',
+    },
+    // refresh: {
+    //   initial: 'loading',
+    //   states: {
+    //     loading: {
+    //       invoke: {
+    //         id: 'fetch-routes',
+    //         src: getRoutesData,
+    //         onDone: {
+    //           target: 'loaded',
+    //           actions: assign({
+    //             routes: (context, event) => event.data,
+    //           }),
+    //         },
+    //         onError: 'failed',
+    //       },
+    //     },
+    //     loaded: {},
+    //     failed: {},
+    //   },
+    // },
   },
+  // on: {
+  //   REFRESH_BUS_ROUTES: {
+  //     target: '.refresh',
+  //   },
+  // },
 });

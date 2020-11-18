@@ -10,11 +10,9 @@ import {busRoutesMachine} from '../../xstate/lista-linii';
 
 const ListsOfItems = ({navigation}) => {
   const [searchFor, setSearchFor] = useState('bus');
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  const [current] = useMachine(busRoutesMachine);
-  const {routes, stops} = current.context;
-  // console.log('and the routes are?', stops);
+  const [state] = useMachine(busRoutesMachine);
+  const {routes, stops} = state.context;
 
   const renderBusItems = ({item}) => (
     <BusItem item={item} navigation={navigation} />
@@ -26,7 +24,7 @@ const ListsOfItems = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={wrapperStyles.centered}>
-        {current.matches('dataLoaded') ? (
+        {state.matches('dataLoaded') ? (
           <View style={[wrapperStyles.centered, {paddingTop: 50}]}>
             <Text>Choose either bus or bus stop</Text>
             <Text>Will add search here....</Text>

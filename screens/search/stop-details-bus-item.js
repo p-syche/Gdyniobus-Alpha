@@ -1,40 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Pressable} from 'react-native';
-import BusItem from './bus-item';
-import BusDetails from './bus-details';
+import BusTripsPerRoute from './bus-trips-per-route';
 
-// <BusItem item={currentBusRoute} navigation={navigation} />
-
-const StopDetailsBusItem = ({item, navigation, busRoutes}) => {
-  // const [currentTrip, setCurrentTrip] = useState(null);
-
-  // // const isCurrentRoute = (value) => {
-  // //   return value.routeId === item.routeId && value.tripId === item.tripId;
-  // // };
-
-  // const isCurrentRoute = (value) => {
-  //   return value.routeId === item.routeId && value.tripId === item.tripId;
-  // };
-
-  // useEffect(() => {
-  //   const currentBusRoute = busRoutes.filter(isCurrentRoute);
-  //   setCurrentTrip(currentBusRoute);
-  // }, []);
-
-  // // console.log(
-  // //   'can I have a useeffect here?',
-  // //   currentTrip,
-  // //   item.routeId,
-  // //   // busRoutes,
-  // // );
-
+const StopDetailsBusItem = ({item, navigation}) => {
   return (
     <View style={styles.item}>
-      <Text>{item.delayDesc}</Text>
-      <Text>{item.shortName}</Text>
-      <Text>{item.headSign}</Text>
-      <Text>{item.routeId}</Text>
-      <Text>{item.tripId}</Text>
+      <Pressable
+        onPress={() => {
+          navigation.navigate('BusTripsPerRoute', {
+            routeId: item.routeId,
+            routeNumber: item.shortName,
+          });
+        }}>
+        <Text style={styles.title}>{item.routeId}</Text>
+        <Text style={styles.title}>{item.shortName}</Text>
+        <Text>{item.delayDesc}</Text>
+        <Text>{item.shortName}</Text>
+        <Text>{item.headSign}</Text>
+        <Text>{item.routeId}</Text>
+        <Text>{item.tripId}</Text>
+      </Pressable>
     </View>
   );
 };
