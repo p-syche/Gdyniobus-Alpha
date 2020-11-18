@@ -9,9 +9,7 @@ const StopItem = ({item, navigation, busRoutes}) => {
       <Pressable
         onPress={() => {
           navigation.navigate('StopDetails', {
-            stopItem: item,
             stopId: item.stopId,
-            busRoutes: busRoutes,
           });
         }}>
         <Text style={styles.title}>{item.stopDesc}</Text>
