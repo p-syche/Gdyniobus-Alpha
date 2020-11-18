@@ -22,37 +22,33 @@ const ListsOfItems = ({navigation}) => {
   );
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={wrapperStyles.centered}>
-        {state.matches('dataLoaded') ? (
-          <View style={[wrapperStyles.centered, {paddingTop: 50}]}>
-            <Text>Choose either bus or bus stop</Text>
-            <Text>Will add search here....</Text>
-
-            <View style={styles.buttons}>
-              <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
-              <Button title="Przystanki" onPress={() => setSearchFor('stop')} />
-            </View>
-            <View />
-            {searchFor === 'bus' ? (
-              <FlatList
-                data={routes}
-                renderItem={renderBusItems}
-                keyExtractor={(item) => item.uniqueId}
-              />
-            ) : (
-              <FlatList
-                data={stops}
-                renderItem={renderStopItems}
-                keyExtractor={(item) => item.stopShortName}
-              />
-            )}
+    <View style={[wrapperStyles.centered, {marginTop: 50}]}>
+      {state.matches('dataLoaded') ? (
+        <View style={[wrapperStyles.centered, {paddingTop: 50}]}>
+          <Text>Choose either bus or bus stop</Text>
+          <View style={styles.buttons}>
+            <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
+            <Button title="Przystanki" onPress={() => setSearchFor('stop')} />
           </View>
-        ) : (
-          <Text>Loading...</Text>
-        )}
-      </View>
-    </SafeAreaView>
+          <View />
+          {searchFor === 'bus' ? (
+            <FlatList
+              data={routes}
+              renderItem={renderBusItems}
+              keyExtractor={(item) => item.uniqueId}
+            />
+          ) : (
+            <FlatList
+              data={stops}
+              renderItem={renderStopItems}
+              keyExtractor={(item) => item.stopShortName}
+            />
+          )}
+        </View>
+      ) : (
+        <Text>Loading...</Text>
+      )}
+    </View>
   );
 };
 
