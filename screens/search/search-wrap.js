@@ -5,8 +5,6 @@ import LoaderComponent from './LoaderComponent';
 import SearchComponent from './SearchComponent';
 import ListsOfItems from './lists-of-items';
 
-console.disableYellowBox = true;
-
 const SearchWrap = () => {
   const [scrollYValue, setScrollYValue] = useState(new Animated.Value(0));
   const clampedScroll = Animated.diffClamp(

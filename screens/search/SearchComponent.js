@@ -38,8 +38,8 @@ const SearchComponent = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 50,
+    // position: 'absolute',
+    // top: 50,
     width: deviceWidth - 40,
     left: 20,
     zIndex: 99,

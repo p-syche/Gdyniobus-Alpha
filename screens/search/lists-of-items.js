@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, FlatList, Button} from 'react-native';
+import {StyleSheet, View, Text, FlatList, Button, Animated} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import BusItem from './bus-item';
 import StopItem from './stop-item';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 
+import SearchComponent from './SearchComponent';
+
 import {useMachine} from '@xstate/react';
 import {busRoutesMachine} from '../../xstate/lista-linii';
 
-const ListsOfItems = ({navigation}) => {
-  const [searchFor, setSearchFor] = useState('bus');
-
+const ListsOfItems = ({navigation, searchFor, setScrollYValue}) => {
   const [state] = useMachine(busRoutesMachine);
   const {routes, stops} = state.context;
 
@@ -24,18 +24,22 @@ const ListsOfItems = ({navigation}) => {
   return (
     <View style={[wrapperStyles.centered, {marginTop: 50}]}>
       {state.matches('dataLoaded') ? (
-        <View style={[wrapperStyles.centered, {paddingTop: 50}]}>
-          <Text>Choose either bus or bus stop</Text>
-          <View style={styles.buttons}>
-            <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
-            <Button title="Przystanki" onPress={() => setSearchFor('stop')} />
-          </View>
-          <View />
+        <View style={[wrapperStyles.centered]}>
           {searchFor === 'bus' ? (
             <FlatList
               data={routes}
               renderItem={renderBusItems}
               keyExtractor={(item) => item.uniqueId}
+              onScroll={
+                (value) => console.log('just checking the scroll ;)', value)
+                // Animated.event(
+                //   [{nativeEvent: {contentOffset: {y: scrollYValue}}}],
+                //   {useNativeDriver: false},
+                //   () => {
+                //     console.log('hey hey ho ho, inside the Animated event.');
+                //   }, // Optional async listener
+                // )
+              }
             />
           ) : (
             <FlatList
