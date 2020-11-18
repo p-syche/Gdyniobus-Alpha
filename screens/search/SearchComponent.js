@@ -1,6 +1,5 @@
 import React from 'react';
 import {Animated, StyleSheet, TextInput} from 'react-native';
-import {deviceWidth} from './LoaderComponent';
 
 const SearchComponent = (props) => {
   const {clampedScroll} = props;
@@ -38,9 +37,6 @@ const SearchComponent = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    // position: 'absolute',
-    // top: 50,
-    width: deviceWidth - 40,
     left: 20,
     zIndex: 99,
     backgroundColor: 'white',
