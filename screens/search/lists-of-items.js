@@ -10,7 +10,7 @@ import SearchComponent from './SearchComponent';
 import {useMachine} from '@xstate/react';
 import {busRoutesMachine} from '../../xstate/lista-linii';
 
-const ListsOfItems = ({navigation, searchFor, setScrollYValue}) => {
+const ListsOfItems = ({navigation, searchFor, scrollYValue}) => {
   const [state] = useMachine(busRoutesMachine);
   const {routes, stops} = state.context;
 
@@ -31,14 +31,14 @@ const ListsOfItems = ({navigation, searchFor, setScrollYValue}) => {
               renderItem={renderBusItems}
               keyExtractor={(item) => item.uniqueId}
               onScroll={
-                (value) => console.log('just checking the scroll ;)', value)
-                // Animated.event(
-                //   [{nativeEvent: {contentOffset: {y: scrollYValue}}}],
-                //   {useNativeDriver: false},
-                //   () => {
-                //     console.log('hey hey ho ho, inside the Animated event.');
-                //   }, // Optional async listener
-                // )
+                // (value) => console.log('just checking the scroll ;)', value)
+                Animated.event(
+                  [{nativeEvent: {contentOffset: {y: scrollYValue}}}],
+                  {useNativeDriver: false},
+                  () => {
+                    console.log('hey hey ho ho, inside the Animated event.');
+                  }, // Optional async listener
+                )
               }
             />
           ) : (

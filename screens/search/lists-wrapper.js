@@ -36,7 +36,7 @@ const ListsWrapper = ({navigation}) => {
       <ListsOfItems
         navigation={navigation}
         searchFor={searchFor}
-        setScrollYValue={setScrollYValue}
+        scrollYValue={scrollYValue}
       />
     </View>
   );
