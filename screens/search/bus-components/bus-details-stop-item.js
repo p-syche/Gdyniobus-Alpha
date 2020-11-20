@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Pressable} from 'react-native';
-import {simpleGetStops} from '../../utils/async-stored-data';
+import {simpleGetStops} from '../../../utils/async-stored-data';
 
 const BusStopDescription = ({stopId}) => {
   const [currentStop, setCurrentStop] = useState(null);

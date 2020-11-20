@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Text, FlatList, Button, Animated} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import BusItem from './bus-item';
-import StopItem from './stop-item';
+import BusItem from './bus-components/bus-item';
+import StopItem from './stop-components/stop-item';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
-
-import SearchComponent from './SearchComponent';
 
 import {useMachine} from '@xstate/react';
 import {busRoutesMachine} from '../../xstate/lista-linii';
@@ -35,9 +33,7 @@ const ListsOfItems = ({navigation, searchFor, scrollYValue}) => {
                 Animated.event(
                   [{nativeEvent: {contentOffset: {y: scrollYValue}}}],
                   {useNativeDriver: false},
-                  () => {
-                    console.log('hey hey ho ho, inside the Animated event.');
-                  }, // Optional async listener
+                  () => {}, // Optional async listener
                 )
               }
             />
@@ -46,6 +42,14 @@ const ListsOfItems = ({navigation, searchFor, scrollYValue}) => {
               data={stops}
               renderItem={renderStopItems}
               keyExtractor={(item) => item.stopShortName}
+              onScroll={
+                // (value) => console.log('just checking the scroll ;)', value)
+                Animated.event(
+                  [{nativeEvent: {contentOffset: {y: scrollYValue}}}],
+                  {useNativeDriver: false},
+                  () => {}, // Optional async listener
+                )
+              }
             />
           )}
         </View>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Pressable} from 'react-native';
-import BusTripsPerRoute from './bus-trips-per-route';
+import BusTripsPerRoute from '../bus-components/bus-trips-per-route';
 
 const StopDetailsBusItem = ({item, navigation}) => {
   return (

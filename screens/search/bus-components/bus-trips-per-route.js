@@ -11,7 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import BusDetails from './bus-details';
 
 import {useMachine} from '@xstate/react';
-import {busRoutesMachine} from '../../xstate/lista-linii';
+import {busRoutesMachine} from '../../../xstate/lista-linii';
 
 const BusTripsPerRoute = ({route, navigation}) => {
   const {routeId, routeNumber} = route.params;

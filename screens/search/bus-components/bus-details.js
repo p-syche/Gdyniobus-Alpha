@@ -1,22 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, View, Text, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {wrapperStyles} from '../../assets/wrapper_stylesheet';
+import {wrapperStyles} from '../../../assets/wrapper_stylesheet';
 import BusDetailsStopItem from './bus-details-stop-item';
 
 import {State, interpret} from 'xstate';
-import {busRoutesMachine} from '../../xstate/lista-linii';
-import {simpleGetStopsForTripsData} from '../../utils/async-stored-data';
+import {busRoutesMachine} from '../../../xstate/lista-linii';
+import {simpleGetStopsForTripsData} from '../../../utils/async-stored-data';
 
 const BusDetails = ({route, navigation}) => {
   const {routeId, routeName, tripHeadsign, tripId} = route.params;
-  // console.log(
-  //   'I will be checking route params here in the BUS DETAILS SCREEN',
-  //   routeId,
-  //   routeName,
-  //   tripHeadsign,
-  //   tripId,
-  // );
+
   const [currentTrip, setCurrentTrip] = useState([]);
 
   const isCurrentRoute = (value) => {

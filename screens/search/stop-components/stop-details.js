@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, View, Text, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {wrapperStyles} from '../../assets/wrapper_stylesheet';
+import {wrapperStyles} from '../../../assets/wrapper_stylesheet';
 import StopDetailsBusItem from './stop-details-bus-item';
 
-import {getEstimatedArrivalsFromApiAsync} from '../../utils/fetch-stop-data';
+import {getEstimatedArrivalsFromApiAsync} from '../../../utils/fetch-stop-data';
 
 import {useMachine} from '@xstate/react';
-import {busRoutesMachine} from '../../xstate/lista-linii';
+import {busRoutesMachine} from '../../../xstate/lista-linii';
 
 const StopDetails = ({route, navigation}) => {
   const {stopId} = route.params;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import {StyleSheet, View, Text, FlatList, Button, Animated} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
@@ -6,8 +6,26 @@ import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 import ListsNavbar from './lists-navbar';
 import ListsOfItems from './lists-of-items';
 
+import {useMachine} from '@xstate/react';
+import {busRoutesMachine} from '../../xstate/lista-linii';
+
 const ListsWrapper = ({navigation}) => {
+  const [state] = useMachine(busRoutesMachine);
+  const {routes, stops} = state.context;
   const [searchFor, setSearchFor] = useState('bus');
+  const [listOfCurrentItems, setListOfCurrentItems] = useState(routes);
+
+  useEffect(() => {
+    if (state.matches('dataLoaded')) {
+      if (searchFor === 'bus') {
+        setListOfCurrentItems(routes);
+      } else {
+        setListOfCurrentItems(stops);
+      }
+    }
+  }, [state, searchFor]);
+
+  const [searchedTerm, setSearchedTerm] = useState('');
 
   const [scrollYValue, setScrollYValue] = useState(new Animated.Value(0));
   const clampedScroll = Animated.diffClamp(
@@ -24,9 +42,25 @@ const ListsWrapper = ({navigation}) => {
     50,
   );
 
+  const usersList = useMemo(() => {
+    if (searchedTerm.length === 0) {
+      return listOfCurrentItems;
+    }
+    const list = listOfCurrentItems.filter((route) => {
+      console.log(listOfCurrentItems);
+      return listOfCurrentItems.routeShortName.includes(searchedTerm);
+    });
+    return list;
+  }, [searchedTerm]);
+
   return (
     <View style={[wrapperStyles.centered]}>
-      <ListsNavbar clampedScroll={clampedScroll} />
+      <ListsNavbar
+        clampedScroll={clampedScroll}
+        searchedTerm={searchedTerm}
+        setSearchedTerm={setSearchedTerm}
+        listOfCurrentItems={listOfCurrentItems}
+      />
       <Text>Choose either bus or bus stop</Text>
       <View style={styles.buttons}>
         <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
