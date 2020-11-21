@@ -2,7 +2,6 @@ import React, {useMemo, useState} from 'react';
 import {
   Animated,
   ScrollView,
-  StatusBar,
   StyleSheet,
   TextInput,
   View,

@@ -1,30 +1,21 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
+import SettingsScreen from './settings-screen';
+import AppHeader from '../app-header';
 
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const SettingsScreen = ({navigation}) => {
+const Stack = createStackNavigator();
+
+const SearchScreen = ({navigation}) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Settings settings set set settings</Text>
-        <Text>Will use Async Storage</Text>
-        <Button
-          title="Favorites screen"
-          onPress={() => navigation.navigate('Favorites')}
-          color="#bada55"
-        />
-      </View>
-    </SafeAreaView>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Ustawienia"
+        component={SettingsScreen}
+        options={{headerTitle: (props) => <AppHeader {...props} />}}
+      />
+    </Stack.Navigator>
   );
 };
 
-export default SettingsScreen;
+export default SearchScreen;

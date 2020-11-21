@@ -1,15 +1,23 @@
-import * as React from 'react';
-import {StyleSheet, ScrollView, View, Text, StatusBar} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useState, useEffect} from 'react';
+import FavoritesScreen from './favorites-screen';
+import AppHeader from '../app-header';
 
-const FavoritesScreen = ({navigation}) => {
+import {createStackNavigator} from '@react-navigation/stack';
+
+import {headerStyles} from '../../assets/header-styles';
+
+const Stack = createStackNavigator();
+
+const SearchScreen = ({navigation}) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Favorites :heart:</Text>
-      </View>
-    </SafeAreaView>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Ulubione"
+        component={FavoritesScreen}
+        options={{headerTitle: (props) => <AppHeader {...props} />}}
+      />
+    </Stack.Navigator>
   );
 };
 
-export default FavoritesScreen;
+export default SearchScreen;
