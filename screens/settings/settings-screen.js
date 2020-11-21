@@ -13,7 +13,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 const SettingsScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>Settings settings set set settings</Text>
         <Text>Will use Async Storage</Text>

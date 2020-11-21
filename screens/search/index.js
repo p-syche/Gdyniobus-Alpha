@@ -12,27 +12,15 @@ const Stack = createStackNavigator();
 
 const SearchScreen = ({navigation}) => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Lista"
-        component={ListsWrapper}
-        options={{headerTitle: (props) => <AppHeader {...props} />}}
-      />
-      <Stack.Screen
-        name="BusDetails"
-        component={BusDetails}
-        options={{headerTitle: (props) => <AppHeader {...props} />}}
-      />
-      <Stack.Screen
-        name="BusTripsPerRoute"
-        component={BusTripsPerRoute}
-        options={{headerTitle: (props) => <AppHeader {...props} />}}
-      />
-      <Stack.Screen
-        name="StopDetails"
-        component={StopDetails}
-        options={{headerTitle: (props) => <AppHeader {...props} />}}
-      />
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: (props) => <AppHeader {...props} />,
+        headerStyle: {height: 120, backgroundColor: '#bada55'},
+      }}>
+      <Stack.Screen name="Lista" component={ListsWrapper} />
+      <Stack.Screen name="BusDetails" component={BusDetails} />
+      <Stack.Screen name="BusTripsPerRoute" component={BusTripsPerRoute} />
+      <Stack.Screen name="StopDetails" component={StopDetails} />
     </Stack.Navigator>
   );
 };

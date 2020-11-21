@@ -8,12 +8,13 @@ const Stack = createStackNavigator();
 
 const SearchScreen = ({navigation}) => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Ustawienia"
-        component={SettingsScreen}
-        options={{headerTitle: (props) => <AppHeader {...props} />}}
-      />
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: (props) => <AppHeader {...props} />,
+        headerStyle: {height: 120},
+      }}>
+      >
+      <Stack.Screen name="Ustawienia" component={SettingsScreen} />
     </Stack.Navigator>
   );
 };

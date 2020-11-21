@@ -1,5 +1,13 @@
 import React, {useState, useMemo, useEffect} from 'react';
-import {StyleSheet, View, Text, FlatList, Button, Animated} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  Button,
+  Animated,
+  StatusBar,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 
@@ -54,7 +62,8 @@ const ListsWrapper = ({navigation}) => {
   }, [searchedTerm]);
 
   return (
-    <View style={[wrapperStyles.centered]}>
+    <SafeAreaView style={[wrapperStyles.centered]}>
+      <StatusBar backgroundColor="#572cd8" translucent />
       <ListsNavbar
         clampedScroll={clampedScroll}
         searchedTerm={searchedTerm}
@@ -72,7 +81,7 @@ const ListsWrapper = ({navigation}) => {
         searchFor={searchFor}
         scrollYValue={scrollYValue}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

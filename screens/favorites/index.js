@@ -10,12 +10,13 @@ const Stack = createStackNavigator();
 
 const SearchScreen = ({navigation}) => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Ulubione"
-        component={FavoritesScreen}
-        options={{headerTitle: (props) => <AppHeader {...props} />}}
-      />
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: (props) => <AppHeader {...props} />,
+        headerStyle: {height: 120},
+      }}>
+      >
+      <Stack.Screen name="Ulubione" component={FavoritesScreen} />
     </Stack.Navigator>
   );
 };
