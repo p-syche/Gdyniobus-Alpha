@@ -1,6 +1,4 @@
-import {createTheming} from '@callstack/react-theme-provider';
-
-const {ThemeProvider, withTheme} = createTheming({
+export const defaultTheme = {
   blue: {
     primary: '#572cd8',
     light: '#905bff',
@@ -13,6 +11,4 @@ const {ThemeProvider, withTheme} = createTheming({
   },
   grey: '#f6f4fd',
   white: '#ffffff',
-});
-
-export {ThemeProvider, withTheme};
+};

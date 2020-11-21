@@ -8,8 +8,6 @@ import AppHeader from '../app-header';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {headerStyles} from '../../assets/header-styles';
-
 const Stack = createStackNavigator();
 
 const SearchScreen = ({navigation}) => {
