@@ -23,6 +23,8 @@ const SearchScreen = ({navigation}) => {
       screenOptions={{
         headerTitle: (props) => <AppHeader {...props} />,
         headerStyle: headerStyles(theme).statusBar,
+        headerMode: 'screen',
+        cardStyle: {backgroundColor: '#ffffff'},
       }}>
       <Stack.Screen name="Lista" component={ListsWrapper} />
       <Stack.Screen name="BusDetails" component={BusDetails} />

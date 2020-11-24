@@ -12,6 +12,7 @@ const ListsNavbar = ({
   searchedTerm,
   setSearchedTerm,
   listOfCurrentItems,
+  setSearchFor,
 }) => {
   return (
     <View style={[wrapperStyles.centered]}>
@@ -21,6 +22,7 @@ const ListsNavbar = ({
         searchedTerm={searchedTerm}
         setSearchedTerm={setSearchedTerm}
         listOfCurrentItems={listOfCurrentItems}
+        setSearchFor={setSearchFor}
       />
       <View />
     </View>

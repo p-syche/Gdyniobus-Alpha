@@ -1,13 +1,5 @@
 import React, {useState, useMemo, useEffect} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  Button,
-  Animated,
-  StatusBar,
-} from 'react-native';
+import {View, Animated, StatusBar} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 
@@ -47,7 +39,7 @@ const ListsWrapper = ({navigation}) => {
       new Animated.Value(0),
     ),
     0,
-    50,
+    15,
   );
 
   const usersList = useMemo(() => {
@@ -63,19 +55,14 @@ const ListsWrapper = ({navigation}) => {
 
   return (
     <SafeAreaView style={[wrapperStyles.centered]}>
-      <StatusBar backgroundColor="#572cd8" translucent />
+      <StatusBar barStyle="light-content" />
       <ListsNavbar
         clampedScroll={clampedScroll}
         searchedTerm={searchedTerm}
         setSearchedTerm={setSearchedTerm}
         listOfCurrentItems={listOfCurrentItems}
+        setSearchFor={setSearchFor}
       />
-      <Text>Choose either bus or bus stop</Text>
-      <View style={styles.buttons}>
-        <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
-        <Button title="Przystanki" onPress={() => setSearchFor('stop')} />
-      </View>
-      <View />
       <ListsOfItems
         navigation={navigation}
         searchFor={searchFor}
@@ -84,12 +71,5 @@ const ListsWrapper = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-});
 
 export default ListsWrapper;

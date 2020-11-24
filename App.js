@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import * as React from 'react';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import AppHeader from './screens/app-header';
@@ -12,10 +12,18 @@ import SettingsScreen from './screens/settings';
 
 const Tab = createBottomTabNavigator();
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'rgba(87, 44, 216, 0.09)',
+  },
+};
+
 const App = (props) => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer theme={MyTheme}>
         <Tab.Navigator initialRouteName="Search">
           <Tab.Screen name="Search" component={SearchScreen} />
           <Tab.Screen name="Favorites" component={FavoritesScreen} />

@@ -10,14 +10,14 @@ export const headerStyles = (theme) => {
     text: {
       color: theme.white,
       fontFamily: 'Lato-Black',
-      paddingTop: 15,
-      fontSize: 32,
+      paddingTop: 25,
+      fontSize: 28,
     },
     statusBar: {
       height: 120,
       backgroundColor: theme.blue.primary,
-      borderBottomRightRadius: 55,
-      borderBottomLeftRadius: 55,
+      borderBottomRightRadius: 50,
+      borderBottomLeftRadius: 50,
     },
   };
   return themeObject;

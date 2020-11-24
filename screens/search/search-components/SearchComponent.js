@@ -8,7 +8,10 @@ import {
   Text,
   TouchableHighlight,
   TouchableOpacity,
+  Button,
 } from 'react-native';
+import RenderSearchList from './render-search-list';
+import SearchTextInput from './search-input';
 
 const SearchComponent = (props) => {
   const {
@@ -16,6 +19,7 @@ const SearchComponent = (props) => {
     searchedTerm,
     setSearchedTerm,
     listOfCurrentItems,
+    setSearchFor,
   } = props;
   const [textInputFocussed, setTextInputFocussed] = useState(false);
   const searchBarTranslate = clampedScroll.interpolate({
@@ -41,41 +45,6 @@ const SearchComponent = (props) => {
     setTextInputFocussed(false);
     setSearchedTerm(searchTerm);
   };
-  const renderSearchList = () => {
-    return (
-      <View style={styles.searchList}>
-        {temporarySearchResults.length === 0 && (
-          <View style={styles.searchListItem}>
-            <Text style={styles.searchListItemText}>No match found</Text>
-          </View>
-        )}
-        {temporarySearchResults.slice(0, 3).map((name, index) => {
-          return (
-            <View key={index} style={styles.searchListItem}>
-              <Text style={styles.searchListItemText}>
-                {name.routeShortName}
-              </Text>
-            </View>
-          );
-        })}
-        {temporarySearchResults.length !== 0 && (
-          <TouchableOpacity onPress={() => setSearchedTerm(searchTerm)}>
-            <View style={styles.searchListItem}>
-              <Text
-                style={[
-                  styles.searchListItemText,
-                  {
-                    color: '#ff5d51',
-                  },
-                ]}>
-                See all ({temporarySearchResults.length}) names
-              </Text>
-            </View>
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-  };
 
   return (
     <Animated.View
@@ -87,20 +56,32 @@ const SearchComponent = (props) => {
               translateY: searchBarTranslate,
             },
           ],
-          opacity: searchBarOpacity,
         },
       ]}>
-      <TextInput
-        defaultValue={searchedTerm}
-        placeholder="Search"
-        style={styles.formField}
-        placeholderTextColor={'#888888'}
-        onFocus={() => setTextInputFocussed(true)}
-        onBlur={handleBlur}
-        onChange={(event) => setSearchTerm(event.nativeEvent.text)}
-        returnKeyType="send"
-        onSubmitEditing={() => setSearchedTerm(searchTerm)}
-      />
+      <Animated.View
+        style={[
+          styles.searchContainer,
+          {
+            transform: [
+              {
+                translateY: searchBarTranslate,
+              },
+            ],
+            opacity: searchBarOpacity,
+          },
+        ]}>
+        <SearchTextInput
+          searchedTerm={searchedTerm}
+          setTextInputFocussed={setTextInputFocussed}
+          setSearchTerm={setSearchTerm}
+          setSearchedTerm={setSearchedTerm}
+          handleBlur={handleBlur}
+        />
+      </Animated.View>
+      <View style={styles.buttons}>
+        <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
+        <Button title="Przystanki" onPress={() => setSearchFor('stop')} />
+      </View>
       {textInputFocussed && (
         <ScrollView
           style={{
@@ -112,7 +93,9 @@ const SearchComponent = (props) => {
             width: 300,
             height: 600,
           }}>
-          {searchTerm.length > 0 && renderSearchList()}
+          {searchTerm.length > 0 ? (
+            <RenderSearchList temporarySearchResults={temporarySearchResults} />
+          ) : null}
         </ScrollView>
       )}
     </Animated.View>
@@ -122,37 +105,30 @@ const SearchComponent = (props) => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 40,
-    width: 140,
-    left: 20,
-    zIndex: 99,
-    backgroundColor: 'white',
+    top: -20,
+    height: 180,
+    width: '100%',
+    backgroundColor: 'rgba(87, 44, 216, 0.09)',
+    display: 'flex',
+    flex: 1,
+    borderBottomRightRadius: 55,
+    borderBottomLeftRadius: 55,
+  },
+  searchContainer: {
+    padding: 20,
   },
   formField: {
-    backgroundColor: '#F4F4F4',
-    padding: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 20,
     fontSize: 18,
     height: 50,
+    margin: 10,
   },
-  searchList: {
-    paddingLeft: 16,
-  },
-  searchListItem: {
-    paddingTop: 16,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    paddingRight: 16,
-    borderColor: '#DBDBDB',
+  buttons: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  searchListItemText: {
-    fontSize: 20,
-    maxWidth: '85%',
   },
 });
 
