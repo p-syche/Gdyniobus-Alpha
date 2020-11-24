@@ -7,18 +7,17 @@ export const headerStyles = (theme) => {
     backgroundColor: theme.blue.primary,
     display: 'flex',
     flex: 1,
-    // width: windowWidth,
-    // top: -50,
-    // paddingTop: 20,
-    // paddingBottom: 20,
     text: {
       color: theme.white,
+      fontFamily: 'Lato-Black',
+      paddingTop: 15,
+      fontSize: 32,
     },
     statusBar: {
       height: 120,
       backgroundColor: theme.blue.primary,
-      borderBottomRightRadius: 45,
-      borderBottomLeftRadius: 45,
+      borderBottomRightRadius: 55,
+      borderBottomLeftRadius: 55,
     },
   };
   return themeObject;
