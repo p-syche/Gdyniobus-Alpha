@@ -19,8 +19,10 @@ const ListsOfItems = ({navigation, searchFor, scrollYValue}) => {
     <StopItem item={item} navigation={navigation} busRoutes={routes} />
   );
 
+  console.log('do i know the scroll?', scrollYValue);
+
   return (
-    <View style={[wrapperStyles.centered, {marginTop: 50}]}>
+    <View style={[wrapperStyles.centered, {backgroundColor: '#2ddfff'}]}>
       {state.matches('dataLoaded') ? (
         <View style={[wrapperStyles.centered]}>
           {searchFor === 'bus' ? (

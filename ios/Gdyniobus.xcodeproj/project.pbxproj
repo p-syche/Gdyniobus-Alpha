@@ -44,6 +44,8 @@
 		EAF77A7F256D197B000B055E /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAF77A7D256D197B000B055E /* Lato-Light.ttf */; };
 		EAF77A89256D1982000B055E /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAF77A88256D1981000B055E /* Lato-Regular.ttf */; };
 		EAF77A8A256D1982000B055E /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAF77A88256D1981000B055E /* Lato-Regular.ttf */; };
+		EAF77ACA256D3B46000B055E /* Flaticon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAF77AC9256D3B46000B055E /* Flaticon.ttf */; };
+		EAF77ACB256D3B46000B055E /* Flaticon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAF77AC9256D3B46000B055E /* Flaticon.ttf */; };
 		EB3B450BF1DA7AEB834F99B2 /* libPods-Gdyniobus-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FF19F7DE3BB882422E854A /* libPods-Gdyniobus-tvOS.a */; };
 		F015C30DF44749F09D7828AA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11F121F6A9B744E18DB5DB35 /* Zocial.ttf */; };
 		FD32C807E8EE458292DEA703 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7BDF6FAD9DA1425ABCAC0BB7 /* FontAwesome5_Brands.ttf */; };
@@ -111,6 +113,7 @@
 		EAF77A76256D1973000B055E /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		EAF77A7D256D197B000B055E /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		EAF77A88256D1981000B055E /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		EAF77AC9256D3B46000B055E /* Flaticon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Flaticon.ttf; path = ../assets/fonts/Flaticon.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F4F2A448C7B6453A97CCF64C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
@@ -194,6 +197,7 @@
 				03F0D8B541894C9C87B912D0 /* EvilIcons.ttf */,
 				EAF77A7D256D197B000B055E /* Lato-Light.ttf */,
 				EAF77A88256D1981000B055E /* Lato-Regular.ttf */,
+				EAF77AC9256D3B46000B055E /* Flaticon.ttf */,
 				2DDD3EBF0AE54D638D957E87 /* Feather.ttf */,
 				1D038F41EDF0412C921922FF /* FontAwesome.ttf */,
 				7BDF6FAD9DA1425ABCAC0BB7 /* FontAwesome5_Brands.ttf */,
@@ -415,6 +419,7 @@
 				EAF77A6D256D196B000B055E /* Lato-Black.ttf in Resources */,
 				EAD80AAF254834190087650A /* fonts in Resources */,
 				EAF77A78256D1973000B055E /* Lato-Bold.ttf in Resources */,
+				EAF77ACB256D3B46000B055E /* Flaticon.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +435,7 @@
 				08900EEFDD9E42D891802252 /* Entypo.ttf in Resources */,
 				10C1B1BFA0E647F1B2B7CE74 /* EvilIcons.ttf in Resources */,
 				D2A364006BEA414EA3F207BA /* Feather.ttf in Resources */,
+				EAF77ACA256D3B46000B055E /* Flaticon.ttf in Resources */,
 				EAF77A77256D1973000B055E /* Lato-Bold.ttf in Resources */,
 				EAF77A89256D1982000B055E /* Lato-Regular.ttf in Resources */,
 				38E553256E8A4CFE8A0C5395 /* FontAwesome.ttf in Resources */,

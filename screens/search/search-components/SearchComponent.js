@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import RenderSearchList from './render-search-list';
 import SearchTextInput from './search-input';
+import SelectTypeButtons from './select-type-buttons';
 
 const SearchComponent = (props) => {
   const {
@@ -20,6 +21,7 @@ const SearchComponent = (props) => {
     setSearchedTerm,
     listOfCurrentItems,
     setSearchFor,
+    searchFor,
   } = props;
   const [textInputFocussed, setTextInputFocussed] = useState(false);
   const searchBarTranslate = clampedScroll.interpolate({
@@ -78,10 +80,7 @@ const SearchComponent = (props) => {
           handleBlur={handleBlur}
         />
       </Animated.View>
-      <View style={styles.buttons}>
-        <Button title="Autobusy" onPress={() => setSearchFor('bus')} />
-        <Button title="Przystanki" onPress={() => setSearchFor('stop')} />
-      </View>
+      <SelectTypeButtons setSearchFor={setSearchFor} searchFor={searchFor} />
       {textInputFocussed && (
         <ScrollView
           style={{
@@ -125,10 +124,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 50,
     margin: 10,
-  },
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
   },
 });
 

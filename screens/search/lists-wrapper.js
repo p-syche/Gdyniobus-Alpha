@@ -62,6 +62,7 @@ const ListsWrapper = ({navigation}) => {
         setSearchedTerm={setSearchedTerm}
         listOfCurrentItems={listOfCurrentItems}
         setSearchFor={setSearchFor}
+        searchFor={searchFor}
       />
       <ListsOfItems
         navigation={navigation}
