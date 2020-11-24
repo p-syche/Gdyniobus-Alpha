@@ -5,17 +5,24 @@ import BusDetails from './bus-components/bus-details';
 import StopDetails from './stop-components/stop-details';
 import ListsWrapper from './lists-wrapper';
 import AppHeader from '../app-header';
+import {headerStyles} from '../../assets/header-styles';
+
+import {defaultTheme} from '../../assets/color_scheme';
+import {createTheming} from '@callstack/react-theme-provider';
+const {ThemeProvider, useTheme} = createTheming(defaultTheme);
 
 import {createStackNavigator} from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
 const SearchScreen = ({navigation}) => {
+  const theme = useTheme(defaultTheme);
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerTitle: (props) => <AppHeader {...props} />,
-        headerStyle: {height: 120, backgroundColor: '#bada55'},
+        headerStyle: headerStyles(theme).statusBar,
       }}>
       <Stack.Screen name="Lista" component={ListsWrapper} />
       <Stack.Screen name="BusDetails" component={BusDetails} />

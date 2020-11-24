@@ -15,7 +15,9 @@ const AppHeader = (props) => {
     <ThemeProvider>
       <View style={headerStyles(theme)}>
         <Text style={headerStyles(theme).text}>Gdyniobus?????</Text>
-        <Text>{children}</Text>
+        {children === 'Ustawienia' || children === 'Ulubione' ? (
+          <Text>{children}</Text>
+        ) : null}
       </View>
     </ThemeProvider>
   );

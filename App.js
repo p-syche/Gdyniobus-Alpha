@@ -10,15 +10,9 @@ import SearchScreen from './screens/search';
 import FavoritesScreen from './screens/favorites';
 import SettingsScreen from './screens/settings';
 
-import {defaultTheme} from './assets/color_scheme';
-import {createTheming} from '@callstack/react-theme-provider';
-const {ThemeProvider, useTheme} = createTheming(defaultTheme);
-
 const Tab = createBottomTabNavigator();
 
 const App = (props) => {
-  const theme = useTheme(defaultTheme);
-  console.log('im in the app, so?', theme.blue.primary);
   return (
     <SafeAreaProvider>
       <NavigationContainer>

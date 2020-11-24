@@ -14,6 +14,12 @@ export const headerStyles = (theme) => {
     text: {
       color: theme.white,
     },
+    statusBar: {
+      height: 120,
+      backgroundColor: theme.blue.primary,
+      borderBottomRightRadius: 45,
+      borderBottomLeftRadius: 45,
+    },
   };
   return themeObject;
 };
