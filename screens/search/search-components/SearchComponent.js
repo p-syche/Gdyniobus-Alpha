@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: -20,
-    height: 180,
+    height: 200,
     width: '100%',
     backgroundColor: 'rgba(87, 44, 216, 0.09)',
     display: 'flex',

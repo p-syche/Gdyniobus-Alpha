@@ -8,7 +8,7 @@ import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 import {useMachine} from '@xstate/react';
 import {busRoutesMachine} from '../../xstate/lista-linii';
 
-const ListsOfItems = ({navigation, searchFor, scrollYValue}) => {
+const ListsOfItems = ({navigation, searchFor, scrollYValue, clampedScroll}) => {
   const [state] = useMachine(busRoutesMachine);
   const {routes, stops} = state.context;
 
@@ -19,10 +19,32 @@ const ListsOfItems = ({navigation, searchFor, scrollYValue}) => {
     <StopItem item={item} navigation={navigation} busRoutes={routes} />
   );
 
-  console.log('do i know the scroll?', scrollYValue);
+  const searchBarTranslate = clampedScroll.interpolate({
+    inputRange: [0, 50],
+    outputRange: [0, -250],
+    extrapolate: 'clamp',
+  });
+  const searchBarOpacity = clampedScroll.interpolate({
+    inputRange: [0, 10],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
+  // console.log('do i know the scroll?', scrollYValue);
 
   return (
-    <View style={[wrapperStyles.centered, {backgroundColor: '#2ddfff'}]}>
+    <Animated.View
+      style={[
+        wrapperStyles.centered,
+        {
+          backgroundColor: '#2ddfff',
+          transform: [
+            {
+              translateY: searchBarTranslate,
+            },
+          ],
+        },
+      ]}>
       {state.matches('dataLoaded') ? (
         <View style={[wrapperStyles.centered]}>
           {searchFor === 'bus' ? (
@@ -58,15 +80,10 @@ const ListsOfItems = ({navigation, searchFor, scrollYValue}) => {
       ) : (
         <Text>Loading...</Text>
       )}
-    </View>
+    </Animated.View>
   );
 };
 
-const styles = StyleSheet.create({
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default ListsOfItems;

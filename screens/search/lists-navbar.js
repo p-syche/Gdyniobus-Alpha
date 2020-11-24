@@ -17,7 +17,6 @@ const ListsNavbar = ({
 }) => {
   return (
     <View style={[wrapperStyles.centered]}>
-      <Text>Choose either bus or bus stop</Text>
       <SearchComponent
         clampedScroll={clampedScroll}
         searchedTerm={searchedTerm}

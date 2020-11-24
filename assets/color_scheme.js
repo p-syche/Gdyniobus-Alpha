@@ -1,7 +1,7 @@
 export const defaultTheme = {
   blue: {
     primary: '#572cd8',
-    light: '#905bff',
+    light: '#D8CEF7',
     veryLight: 'rgba(87, 44, 216, 0.05)',
     dark: '#0000a5',
   },

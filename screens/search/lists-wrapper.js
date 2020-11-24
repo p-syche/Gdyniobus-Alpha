@@ -65,6 +65,7 @@ const ListsWrapper = ({navigation}) => {
         searchFor={searchFor}
       />
       <ListsOfItems
+        clampedScroll={clampedScroll}
         navigation={navigation}
         searchFor={searchFor}
         scrollYValue={scrollYValue}
