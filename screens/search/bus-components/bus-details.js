@@ -8,8 +8,13 @@ import {State, interpret} from 'xstate';
 import {busRoutesMachine} from '../../../xstate/lista-linii';
 import {simpleGetStopsForTripsData} from '../../../utils/async-stored-data';
 
+import {defaultTheme} from '../../../assets/color_scheme';
+import {createTheming} from '@callstack/react-theme-provider';
+const {useTheme} = createTheming(defaultTheme);
+
 const BusDetails = ({route, navigation}) => {
   const {routeId, routeName, tripHeadsign, tripId} = route.params;
+  const theme = useTheme(defaultTheme);
 
   const [currentTrip, setCurrentTrip] = useState([]);
 
@@ -28,10 +33,18 @@ const BusDetails = ({route, navigation}) => {
   }, []);
 
   return (
-    <View style={[wrapperStyles.centered, {padding: 20}]}>
-      <Text>#{routeName}#</Text>
-      <Text>{tripHeadsign}</Text>
-      <Text>There will be details here?</Text>
+    <View style={[wrapperStyles.centered, styles.container]}>
+      <Text
+        style={[
+          styles.screenTitle,
+          styles.busNumber,
+          {color: theme.blue.primary},
+        ]}>
+        {routeName}
+      </Text>
+      <Text style={[styles.screenTitle, {color: theme.orange.primary}]}>
+        {tripHeadsign}
+      </Text>
       <FlatList
         data={currentTrip}
         renderItem={({item}) => (
@@ -44,14 +57,23 @@ const BusDetails = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  item: {
-    backgroundColor: '#f9c2ff',
+  container: {
+    backgroundColor: 'rgba(87, 44, 216, 0.09)',
+    flex: 1,
     padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
   },
-  title: {
-    fontSize: 32,
+  screenTitle: {
+    fontFamily: 'Lato-Regular',
+    textAlign: 'center',
+    fontSize: 20,
+    paddingBottom: 30,
+    width: '60%',
+  },
+  busNumber: {
+    fontFamily: 'Lato-Bold',
+    fontSize: 45,
+    textAlign: 'center',
+    paddingBottom: 5,
   },
 });
 

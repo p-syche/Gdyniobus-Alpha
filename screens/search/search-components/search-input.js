@@ -21,7 +21,7 @@ const SearchTextInput = (props) => {
     <View>
       <TextInput
         defaultValue={searchedTerm}
-        style={styles.formField}
+        style={[styles.formField, {borderColor: theme.blue.light}]}
         placeholderTextColor={'#888888'}
         onFocus={() => setTextInputFocussed(true)}
         onBlur={handleBlur}
@@ -42,6 +42,7 @@ const SearchTextInput = (props) => {
 const styles = StyleSheet.create({
   formField: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderWidth: 1,
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 20,

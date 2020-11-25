@@ -25,6 +25,9 @@ const SearchScreen = ({navigation}) => {
         headerStyle: headerStyles(theme).statusBar,
         headerMode: 'screen',
         cardStyle: {backgroundColor: '#ffffff'},
+        headerBackTitleStyle: headerStyles(theme).backButton,
+        headerBackTitleVisible: false,
+        headerTintColor: theme.white,
       }}>
       <Stack.Screen name="Lista" component={ListsWrapper} />
       <Stack.Screen name="BusDetails" component={BusDetails} />

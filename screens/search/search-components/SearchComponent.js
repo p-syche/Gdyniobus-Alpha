@@ -104,7 +104,7 @@ const SearchComponent = (props) => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: -20,
+    top: -50,
     height: 200,
     width: '100%',
     backgroundColor: 'rgba(87, 44, 216, 0.09)',
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomRightRadius: 55,
     borderBottomLeftRadius: 55,
+    zIndex: 999,
   },
   searchContainer: {
     padding: 20,

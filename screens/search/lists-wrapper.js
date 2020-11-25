@@ -1,5 +1,5 @@
 import React, {useState, useMemo, useEffect} from 'react';
-import {View, Animated, StatusBar} from 'react-native';
+import {View, Animated, StatusBar, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {wrapperStyles} from '../../assets/wrapper_stylesheet';
 
@@ -54,7 +54,7 @@ const ListsWrapper = ({navigation}) => {
   }, [searchedTerm]);
 
   return (
-    <SafeAreaView style={[wrapperStyles.centered]}>
+    <SafeAreaView style={{flex: 1}}>
       <StatusBar barStyle="light-content" />
       <ListsNavbar
         clampedScroll={clampedScroll}

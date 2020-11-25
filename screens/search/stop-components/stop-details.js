@@ -9,7 +9,13 @@ import {getEstimatedArrivalsFromApiAsync} from '../../../utils/fetch-stop-data';
 import {useMachine} from '@xstate/react';
 import {busRoutesMachine} from '../../../xstate/lista-linii';
 
+import {defaultTheme} from '../../../assets/color_scheme';
+import {createTheming} from '@callstack/react-theme-provider';
+const {useTheme} = createTheming(defaultTheme);
+
 const StopDetails = ({route, navigation}) => {
+  const theme = useTheme(defaultTheme);
+
   const {stopId} = route.params;
   const [estimatedArrivals, setEstimatedArrivals] = useState([]);
   const [currentStop, setCurrentStop] = useState([]);
@@ -48,7 +54,11 @@ const StopDetails = ({route, navigation}) => {
   }, []);
 
   return (
-    <View style={[wrapperStyles.centered, {padding: 20}]}>
+    <View
+      style={[
+        wrapperStyles.centered,
+        {padding: 20, color: theme.blue.primary},
+      ]}>
       <Text style={styles.title}>{currentStop.stopDesc}</Text>
       <FlatList
         data={estimatedArrivals}

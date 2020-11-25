@@ -16,7 +16,7 @@ const ListsNavbar = ({
   searchFor,
 }) => {
   return (
-    <View style={[wrapperStyles.centered]}>
+    <View style={[wrapperStyles.centered, {zIndex: 999}]}>
       <SearchComponent
         clampedScroll={clampedScroll}
         searchedTerm={searchedTerm}
@@ -30,11 +30,6 @@ const ListsNavbar = ({
   );
 };
 
-const styles = StyleSheet.create({
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default ListsNavbar;

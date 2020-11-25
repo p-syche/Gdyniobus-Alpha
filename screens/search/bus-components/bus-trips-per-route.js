@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  Pressable,
-  FlatList,
-} from 'react-native';
+import {StyleSheet, ScrollView, View, Text, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import BusDetails from './bus-details';
+import SingleTripItem from './single-trip-item';
 
 import {useMachine} from '@xstate/react';
 import {busRoutesMachine} from '../../../xstate/lista-linii';
 
+import {defaultTheme} from '../../../assets/color_scheme';
+import {createTheming} from '@callstack/react-theme-provider';
+const {useTheme} = createTheming(defaultTheme);
+
 const BusTripsPerRoute = ({route, navigation}) => {
+  const theme = useTheme(defaultTheme);
+
   const {routeId, routeNumber} = route.params;
   const [tripsForTheRoute, setTripsForTheRoute] = useState([]);
 
@@ -31,31 +31,31 @@ const BusTripsPerRoute = ({route, navigation}) => {
     }
   }, [state]);
 
-  const renderTripItem = ({item}) => (
-    <Pressable
-      style={styles.pressable}
-      onPress={() => {
-        navigation.navigate('BusDetails', {
-          routeId: routeId,
-          routeName: routeNumber,
-          tripHeadsign: item.tripHeadsign,
-          tripId: item.tripId,
-        });
-      }}>
-      <Text style={styles.title}>{routeNumber}</Text>
-      <Text style={styles.title}>{routeId}</Text>
-      <Text style={styles.title}>info {item.tripHeadsign}</Text>
-    </Pressable>
-  );
-
   return (
-    <View style={styles.item}>
-      <Text>Lista tras autobusu {routeNumber}</Text>
-      <Text>Lista tras autobusu {routeId}</Text>
+    <View style={styles.container}>
+      <Text
+        style={[
+          styles.screenTitle,
+          styles.busNumber,
+          {color: theme.blue.primary},
+        ]}>
+        {routeNumber}
+      </Text>
+      <Text style={[styles.screenTitle, {color: theme.orange.primary}]}>
+        Lista tras
+      </Text>
       {state.matches('dataLoaded') ? (
         <FlatList
           data={tripsForTheRoute}
-          renderItem={renderTripItem}
+          renderItem={({item, index}) => (
+            <SingleTripItem
+              index={index}
+              item={item}
+              routeId={routeId}
+              routeNumber={routeNumber}
+              navigation={navigation}
+            />
+          )}
           keyExtractor={(item) => item.id}
         />
       ) : (
@@ -66,18 +66,20 @@ const BusTripsPerRoute = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  item: {
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  pressable: {
+  container: {
+    backgroundColor: 'rgba(87, 44, 216, 0.09)',
+    flex: 1,
     padding: 20,
-    backgroundColor: '#f9c2ff',
-    marginVertical: 10,
-    marginHorizontal: 10,
   },
-  title: {
-    fontSize: 32,
+  screenTitle: {
+    fontFamily: 'Lato-Regular',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  busNumber: {
+    fontFamily: 'Lato-Bold',
+    fontSize: 45,
+    textAlign: 'center',
   },
 });
 
