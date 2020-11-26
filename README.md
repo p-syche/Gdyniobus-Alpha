@@ -18,3 +18,5 @@ Ikonki autobusów/trolejbusów: https://www.flaticon.com/packs/public-transport
 - React Native Vector Icons: https://github.com/oblador/react-native-vector-icons
 <!-- - React Native Bouncing Preloader: https://github.com/sonnylazuardi/react-native-bouncing-preloader -->
 - XState: https://xstate.js.org/
+- React Native SVG: https://github.com/react-native-community/react-native-svg
+- React Native SVG Transformer: https://github.com/kristerkari/react-native-svg-transformer
