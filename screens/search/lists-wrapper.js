@@ -47,7 +47,7 @@ const ListsWrapper = ({navigation}) => {
       return listOfCurrentItems;
     }
     const list = listOfCurrentItems.filter((route) => {
-      console.log(listOfCurrentItems);
+      // console.log(listOfCurrentItems);
       return listOfCurrentItems.routeShortName.includes(searchedTerm);
     });
     return list;

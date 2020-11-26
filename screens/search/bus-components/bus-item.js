@@ -40,13 +40,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
   },
   subtitle: {
     fontSize: 12,

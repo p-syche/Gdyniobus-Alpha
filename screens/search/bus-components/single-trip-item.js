@@ -8,6 +8,7 @@ const {useTheme} = createTheming(defaultTheme);
 
 const SingleTripItem = ({item, navigation, routeId, routeNumber, index}) => {
   const theme = useTheme(defaultTheme);
+  // console.log('this single trip item is kinda broken', item);
   return (
     <Pressable
       style={[

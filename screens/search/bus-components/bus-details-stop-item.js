@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Pressable} from 'react-native';
 import {simpleGetStops} from '../../../utils/async-stored-data';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import StopDetails from '../stop-components/stop-details';
 
 import {defaultTheme} from '../../../assets/color_scheme';
 import {createTheming} from '@callstack/react-theme-provider';

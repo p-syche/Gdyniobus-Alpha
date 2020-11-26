@@ -13,6 +13,10 @@ import {createTheming} from '@callstack/react-theme-provider';
 const {useTheme} = createTheming(defaultTheme);
 
 const BusDetails = ({route, navigation}) => {
+  // console.log(
+  //   'unfortunately the details are not receiving what they need...',
+  //   route,
+  // );
   const {routeId, routeName, tripHeadsign, tripId} = route.params;
   const theme = useTheme(defaultTheme);
 
